@@ -1,6 +1,7 @@
 package fi.helsinki.cs.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 @Entity
 @Table(name="Person") //In Postgres 'User' is reserved word.... 
@@ -27,7 +32,12 @@ public class User implements Serializable {
         
         @Column
 	private String password;
-
+        
+        @Column(insertable=false, updatable=false, columnDefinition="timestamp default current_timestamp", nullable=true)
+        @Generated(value=GenerationTime.INSERT)
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date created;
+        
 	public User() {}
 
 	public Long getId() {
@@ -85,5 +95,19 @@ public class User implements Serializable {
             return super.toString() + " name = " + name
 				+ " id = " + id;
 	}
+
+        /**
+         * @return the created
+         */
+        public Date getCreated() {
+            return created;
+        }
+
+        /**
+         * @param created the created to set
+         */
+        public void setCreated(Date created) {
+            this.created = created;
+        }
 
 }
