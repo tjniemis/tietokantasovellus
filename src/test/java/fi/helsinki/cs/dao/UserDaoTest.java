@@ -9,7 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +50,6 @@ public class UserDaoTest {
 	public void listUsers() {
 		List<User> users = userDao.getUsers();
 		Assert.assertEquals(DataInitializer.USER_COUNT, users.size());
-
 	}
 
 }
