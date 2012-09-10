@@ -1,2 +1,21 @@
 button.mainbutton { width: 250px; height: 60px; } 
-.buttons { left: 30%; position: absolute; margin-left: -220px; width: 950px; margin-top: 100px;font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 11pt;}
+button.currentbutton { width: 210px; height: 50px; } 
+button.headerbutton { width: 140px; height: 30px; } 
+button.smallbutton { width: 70px; height: 26px;} 
+.buttons { 
+	left: 30%; 
+	position: absolute; 
+	margin-left: -220px; 
+	width: 950px; 
+	margin-top: 100px;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 11pt;
+}
+.smallbuttons { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 8pt; margin-top: 15px; margin-left: 20px;}
+.omatbuttons { margin-top: 40px; font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 11pt;}
+.mainbuttons { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt;margin-top:40px; }
+.header { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 19pt;}
+#accordion { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; width: 850px;text-align:center;margin:0 auto; }
+#dialog { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; }
+#dialog2 { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; }
+.lomake { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 10pt;}

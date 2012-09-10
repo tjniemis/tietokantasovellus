@@ -2,44 +2,55 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>jQuery UI Example Page</title>
+		<title>TyölleTekijä!</title>
 		<link type="text/css" href="css/main.css" rel="stylesheet" />
 		<link type="text/css" href="jquery-start/css/start/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
 		<script type="text/javascript" src="jquery-start/js/jquery-1.8.0.min.js"></script>
 		<script type="text/javascript" src="jquery-start/js/jquery-ui-1.8.23.custom.min.js"></script>
 		<script>
 			$(function() {
-				$( "button", ".buttons" ).button();
+				$( "button", ".mainbuttons, .omatbuttons" ).button();				
+				$( "#radio" ).buttonset();
+				$( "#radio2" ).buttonset();
+				$( "#accordion" ).accordion({
+					collapsible: true,
+					active: false
+				});
 			});
 		</script>
 	</head>
-	<body>
-	<br>
-	<h1 align="center">TyölleTekijä!</h1>
-	<div class="buttons">
-		<table width="900" cellpadding="10">
-		<tr>
-		<td width="300">
-		<button class="mainbutton" onclick="location.href='ilmoita.html'">Ilmoita työ</button>
-		</td><td width="300">
-		<button class="mainbutton" onclick="location.href='ilmoitukset.html'">Työilmoitukset</button>
-		</td><td width="300">
-		<button class="mainbutton" onclick="location.href='omat.html'">Omat tiedot</button>	
-		</td>
-		</tr>
-		<tr>
-		<td width="250" valign="top">
-		Puuttuuko uusien keittiökoneiden asentaja? Harjakaton uusija? Yhdistykseltäsi verkkosivut? Ilmoita työstä täällä ja löydä työlle tekijä!
-		</td><td valign="top">
-		Työkalenterissa tilaa? Selaa työilmoituksia täällä ja tarjoa!
-		</td><td valign="top">
-		Selaa ilmoitus- ja työhistoriaasi. Seuraa aktiivisia ilmoituksia ja tarjoustesi edistymistä täällä. 
-		</td>
-		</tr>
-
-		</table>
+	<body style="text-align:center;margin:0 auto;">
+	<h1 class="header">TyölleTekijä!</h1>
+	<div id="radio2" class="mainbuttons">
+		<input type="radio" id="radio11" name="radio2" onclick="location.href='ilmoita.html'"/><label for="radio11">Ilmoita työ</label>
+		<input type="radio" id="radio22" name="radio2" onclick="location.href='ilmoitukset.html'"/><label for="radio22">Työilmoitukset</label>
+		<input type="radio" id="radio33" checked="checked" name="radio2" /><label for="radio33">Omat tiedot</label>
+	</div>
+	<div id="radio" class="omatbuttons">
+		<input type="radio" id="radio1" checked="checked" name="radio" /><label for="radio1">Työhistoria</label>
+		<input type="radio" id="radio2" name="radio" /><label for="radio2">Ilmoitushistoria</label>
+		<input type="radio" id="radio3" name="radio" /><label for="radio3">Tarjoushistoria</label>
+		<input type="radio" id="radio4" name="radio" /><label for="radio4">Aktiiviset tarjoukset</label>
+		<input type="radio" id="radio5" name="radio" /><label for="radio5">Aktiiviset ilmoitukset</label>
+	</div>
+	<br><br>
+	<div id="accordion" class="acc">
+		<h3><a href="#">Kylpyhuoneremontti Karhusuontiellä</a></h3>
+		<div>
+			<p align="left"><b>Hinta:</b> 9800e</p>
+			<p align="left"><b>Kuvaus:</b> Kylpyhuoneen laatoituksen uusiminen ja uusien kalusteiden asennus.</p>
+		</div>
+		<h3><a href="#">Parkettilattian asennus Hämeentiellä</a></h3>
+		<div>
+			<p align="left"><b>Hinta:</b> 2900e</p>
+			<p align="left"><b>Kuvaus:</b> Parkettilattian asentaminen ja vanhan laminaattilattian purkaminen. Asunnon koko 52 neliöä.</p>
+		</div>
+		<h3><a href="#">Kattopaneelien asennus Mäkelänkadulla</a></h3>
+		<div>
+			<p align="left"><b>Hinta:</b> 1800e</p>
+			<p align="left"><b>Kuvaus:</b> Pelkkä olohuone. Koko 12 neliöä.</p>
+		</div>
 	</div>
 	</body>
 </html>
-
 
