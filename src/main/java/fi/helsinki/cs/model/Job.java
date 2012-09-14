@@ -7,14 +7,26 @@ package fi.helsinki.cs.model;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author tesuomin
  */
+@Entity
 public class Job extends PersistentObject {
-
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     
     @Column
     private String title;
@@ -23,6 +35,7 @@ public class Job extends PersistentObject {
     private String description;
     
     @Column
+    @Temporal(TemporalType.TIMESTAMP)
     private Date expires;
     
     @Column
@@ -34,8 +47,13 @@ public class Job extends PersistentObject {
     @Column
     private Integer rating;
     
-    @OneToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="owner_id")
     private User user;
+    
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="wining_offer_id")
+    private Offer winningOffer;
 
     /**
      * @return the title
@@ -133,5 +151,33 @@ public class Job extends PersistentObject {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the winningOffer
+     */
+    public Offer getWinningOffer() {
+        return winningOffer;
+    }
+
+    /**
+     * @param winningOffer the winningOffer to set
+     */
+    public void setWinningOffer(Offer winningOffer) {
+        this.winningOffer = winningOffer;
     }
 }

@@ -32,6 +32,6 @@ public class UserDao {
 		} else {
 			return entityManager.merge(user);
 		}		
-	}	
+	}
 	
 }

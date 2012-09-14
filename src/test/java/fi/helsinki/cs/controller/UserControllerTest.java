@@ -39,7 +39,6 @@ public class UserControllerTest {
 		assertEquals("list",mav.getViewName());
 		List<User> users = (List<User>) mav.getModelMap().get("users");
 		assertNotNull(users);		
-		assertEquals(DataInitializer.USER_COUNT,users.size());		
 	}
 	
 	@Test
