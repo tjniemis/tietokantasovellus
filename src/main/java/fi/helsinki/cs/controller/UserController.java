@@ -52,7 +52,6 @@ public class UserController {
 		mav.addObject("users",users);
 		mav.setViewName("list");
 		return mav;
-		
 	}
 
 }

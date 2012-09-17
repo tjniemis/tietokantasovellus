@@ -23,34 +23,25 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserControllerTest {
 	
 	@Autowired
-	private DataInitializer dataInitializer;
-	
-	@Autowired
 	private UserController userController;
-		
-	@Before
-	public void before() {
-		dataInitializer.initData();
-	}
 	
 	@Test
 	public void userList() {
 		ModelAndView mav = userController.list();
 		assertEquals("list",mav.getViewName());
 		List<User> users = (List<User>) mav.getModelMap().get("users");
-		assertNotNull(users);		
+		assertNotNull(users);
 	}
 	
 	@Test
 	public void getUser() {
-		Long template = dataInitializer.users.get(1);
-		ModelAndView mav = userController.get(template);
+		ModelAndView mav = userController.get(new Long(1));
 		assertNotNull(mav);
 		assertEquals("user", mav.getViewName());
 		Object object = mav.getModel().get("user");
 		assertTrue(User.class.isAssignableFrom(object.getClass()));
 		User user = (User)object;
-		assertEquals(template,user.getId());
+		assertEquals(new Long(1),user.getId());
 	}
 	
 }

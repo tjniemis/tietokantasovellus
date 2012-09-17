@@ -2,10 +2,8 @@ package fi.helsinki.cs.dao;
 
 import java.util.List;
 
-import fi.helsinki.cs.controller.DataInitializer;
 import fi.helsinki.cs.model.User;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,8 @@ public class UserDaoTest {
 	public void testSaveAndGetUser() {
             User p = new User();
             p.setName("Al Bundy");
+            p.setEmail("bundy@email.com");
+            p.setPassword("password");
             userDao.save(p);
             Long id = p.getId();
             Assert.assertNotNull(id);

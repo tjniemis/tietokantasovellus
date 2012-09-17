@@ -10,12 +10,19 @@ import fi.helsinki.cs.model.User;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author tesuomin
  */
+@ContextConfiguration("/test-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
+@Transactional
 public class OfferDaoTest {
 
     @Autowired
@@ -72,4 +79,5 @@ public class OfferDaoTest {
         Offer result = offerDao.save(offer);
         assertEquals(offer.getDescription(), result.getDescription());
     }
+    
 }
