@@ -52,7 +52,7 @@ public class Job extends PersistentObject {
     private User user;
     
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="wining_offer_id")
+    @JoinColumn(name="winning_offer_id")
     private Offer winningOffer;
 
     /**

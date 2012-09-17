@@ -33,7 +33,7 @@ public class Question extends PersistentObject {
     private User user;
     
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="offer_id")
+    @JoinColumn(name="job_id")
     private Job job;
 
     @OneToOne(cascade=CascadeType.ALL)

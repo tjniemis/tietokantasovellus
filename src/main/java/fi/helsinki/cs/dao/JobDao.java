@@ -28,6 +28,10 @@ public class JobDao {
 		return entityManager.createQuery("select j from Jobs j").getResultList();
 	}
         
+        /**
+         * Ilmoitushistoria
+         * 
+         */
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getJobsByUser(User user) {
@@ -36,18 +40,26 @@ public class JobDao {
 		return query.getResultList();
 	}
         
+        /**
+         * Aktiiviset työt 
+         * 
+         */
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getActiveJobsByUser(User user) {
-                Query query = entityManager.createQuery("select j from Job j where j.user = :user and j.status = 1");
+                Query query = entityManager.createQuery("select j from Job j where j.user = :user and j.status = 0");
                 query.setParameter("user", user);
 		return query.getResultList();
 	}
         
+        /**
+         * Työhistoria (kaikki voitetut työt)
+         * 
+         */
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getJobHistoryByUser(User user) {
-                Query query = entityManager.createQuery("select j from Job j where j.user = :user and j.status = 2");
+                Query query = entityManager.createQuery("select j from Job j, Offer o where j.winningOffer=o.id and o.user=:user");
                 query.setParameter("user", user);
 		return query.getResultList();
 	}

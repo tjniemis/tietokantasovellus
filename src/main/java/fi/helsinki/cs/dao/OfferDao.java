@@ -27,12 +27,23 @@ public class OfferDao {
             return entityManager.find(Offer.class, id);
     }
 
+    /**
+     * Kaikki tarjoukset
+     * 
+     * @return 
+     */
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
     public List<Offer> getOffers() {
             return entityManager.createQuery("select j from Offer j").getResultList();
     }
 
+    /**
+     * Tarjoushistoria 
+     * 
+     * @param user
+     * @return 
+     */
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
     public List<Offer> getOffersByUser(User user) {
@@ -41,11 +52,31 @@ public class OfferDao {
             return query.getResultList();
     }
     
+    /**
+     * Kaikki työn tarjoukset
+     * 
+     * @param job
+     * @return 
+     */
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
     public List<Offer> getOffersByJob(Job job) {
             Query query = entityManager.createQuery("select j from Offer j where j.job = :job");
             query.setParameter("job", job);
+            return query.getResultList();
+    }
+    
+    /**
+     * Aktiiviset tarjoukset
+     * 
+     * @param user
+     * @return 
+     */
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly=true)
+    public List<Offer> getActiveOffersByUser(User user) {
+            Query query = entityManager.createQuery("select o from Offer o, Job j where o.job = j.id and o.user = :user and j.status = 0");
+            query.setParameter("user", user);
             return query.getResultList();
     }
 

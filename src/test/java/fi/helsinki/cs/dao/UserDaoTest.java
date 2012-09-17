@@ -21,35 +21,24 @@ public class UserDaoTest {
 	@Autowired
 	private UserDao userDao;
 
-	@Autowired
-	private DataInitializer dataInitializer;
-
-	@Before
-	public void prepareData() {
-		dataInitializer.initData();
-	}
-
 	@Test
-	public void saveUser() {
-		User p = new User();
-		p.setName("Al Bundy");
-		userDao.save(p);
-		Long id = p.getId();
-		Assert.assertNotNull(id);
-	}
-
-	@Test
-	public void getUser() {
-		Long template = dataInitializer.users.get(0);
-		User p = userDao.find(template);
-		Assert.assertNotNull("User not found!", p);
-		Assert.assertEquals(template, p.getId());
+	public void testSaveAndGetUser() {
+            User p = new User();
+            p.setName("Al Bundy");
+            userDao.save(p);
+            Long id = p.getId();
+            Assert.assertNotNull(id);
+            
+            User p2 = userDao.find(id);
+            Assert.assertEquals(id, p2.getId());
 	}
 
         @Test
-	public void listUsers() {
-		List<User> users = userDao.getUsers();
-		Assert.assertNotNull(users);
+	public void testListUsers() {
+            List<User> users = userDao.getUsers();
+            Assert.assertTrue(users.size()>0);
 	}
+        
+        
 
 }

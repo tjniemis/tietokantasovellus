@@ -36,9 +36,16 @@
 		<property name="password" value="${db.password}" />
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"></bean>
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 
-	<tx:annotation-driven />
-
+	</bean>
+		
+        
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+        <!-- Database initializer. If any of the script fails, the initialization stops. -->
+	<!-- As an alternative, for embedded databases see <jdbc:embedded-database/>. 
+	<jdbc:initialize-database data-source="dataSource">
+		<jdbc:script location="classpath:populateDB.txt"/>
+	</jdbc:initialize-database>-->
 </beans>
