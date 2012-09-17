@@ -1,0 +1,46 @@
+drop table person cascade;
+drop table job cascade;
+drop table offer cascade;
+drop table question cascade;
+drop table answer cascade;
+
+CREATE TABLE person (
+	id		integer PRIMARY KEY,
+	name		varchar(40) NOT NULL,
+	email		varchar(30) NOT NULL,
+	password	varchar(20) NOT NULL,
+	created		date NOT NULL
+);
+CREATE TABLE job (
+	id		integer CONSTRAINT PRIMARY KEY,
+	title		varchar(50) NOT NULL,
+	description	varchar(50),
+	expires		date NOT NULL,
+	status		integer NOT NULL,	
+	offer_id		integer references person,
+	rating		integer,	
+	review		text,
+	owner_id	integer NOT NULL references person,
+	created		date NOT NULL
+);
+CREATE TABLE offer (
+	id		integer CONSTRAINT PRIMARY KEY,
+	job_id		integer NOT NULL references job,
+	user_id		integer NOT NULL references person,
+	price		numeric NOT NULL,
+	description	text,
+	created		date NOT NULL
+);
+CREATE TABLE question (
+	id		integer CONSTRAINT PRIMARY KEY,
+	user_id		integer NOT NULL references person,
+	job_id		integer NOT NULL references job,
+	question	text NOT NULL,
+	created		date NOT NULL
+);
+CREATE TABLE answer (
+	id		integer CONSTRAINT PRIMARY KEY,
+	question_id	integer NOT NULL references question,
+	answer		text NOT NULL,
+	created		date NOT NULL
+);
