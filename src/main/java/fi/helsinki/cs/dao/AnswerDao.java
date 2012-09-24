@@ -36,10 +36,14 @@ public class AnswerDao {
     
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
-    public List<Answer> getAnswerByQuestion(Question question) {
+    public Answer getAnswerByQuestion(Question question) {
             Query query = entityManager.createQuery("select j from Answer j where j.question = :question");
             query.setParameter("question", question);
-            return query.getResultList();
+            List<Answer> answers = query.getResultList();
+            if (answers.size()>0) 
+                return answers.get(0);
+            else 
+                return null;
     }
 
     @Transactional

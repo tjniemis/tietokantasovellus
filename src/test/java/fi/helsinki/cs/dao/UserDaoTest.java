@@ -3,6 +3,7 @@ package fi.helsinki.cs.dao;
 import java.util.List;
 
 import fi.helsinki.cs.model.User;
+import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,7 @@ public class UserDaoTest {
             p.setName("Al Bundy");
             p.setEmail("bundy@email.com");
             p.setPassword("password");
+            System.out.println("p.created: "+p.getCreated());
             userDao.save(p);
             Long id = p.getId();
             Assert.assertNotNull(id);
@@ -38,6 +40,12 @@ public class UserDaoTest {
             List<User> users = userDao.getUsers();
             Assert.assertTrue(users.size()>0);
 	}
+        
+        @Test
+        public void testFindByEmail() {
+            User user = userDao.findByEmail("bond@email.com");
+            Assert.assertEquals("James Bond", user.getName());
+        }
         
         
 

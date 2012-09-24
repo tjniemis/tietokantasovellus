@@ -4,7 +4,9 @@
  */
 package fi.helsinki.cs.dao;
 
+import fi.helsinki.cs.model.Answer;
 import fi.helsinki.cs.model.Job;
+import fi.helsinki.cs.model.Question;
 import fi.helsinki.cs.model.User;
 import java.util.Date;
 import java.util.List;
@@ -30,6 +32,9 @@ public class JobDaoTest {
     
     @Autowired
     private JobDao jobDao;
+    
+    @Autowired
+    private AnswerDao answerDao;
     
     /**
      * Test of save method, of class JobDao.
@@ -60,12 +65,19 @@ public class JobDaoTest {
         User user = userDao.find(new Long(3)); //Homer Simpson
         List<Job> jobs = jobDao.getJobsByUser(user);
         assertTrue(jobs.size()>0);
+        
     }
     
     @Test
     public void testGetActiveJobsByUser() {
         User user = userDao.find(new Long(3)); //Homer Simpson
         List<Job> jobs = jobDao.getActiveJobsByUser(user);
+        Job job = jobs.get(0);
+        Question question = job.getQuestions().get(0);
+        System.out.println("Question: "+question.getQuestion());
+        Answer answer = answerDao.getAnswerByQuestion(question);
+        System.out.println("Answer: "+answer.getAnswer());
+        assertNotNull(answer);
         assertTrue(jobs.size()>0);
     }
     

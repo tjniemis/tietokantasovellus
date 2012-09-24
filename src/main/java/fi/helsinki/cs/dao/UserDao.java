@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import fi.helsinki.cs.model.User;
+import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,11 @@ public class UserDao {
 		return entityManager.find(User.class, id);
 	}
 	
+        public User findByEmail(String email) {
+            TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
+            return query.setParameter("email", email).getSingleResult();
+	}
+        
 	@SuppressWarnings("unchecked")
 	public List<User> getUsers() {
 		return entityManager.createQuery("select u from User u").getResultList();
@@ -31,7 +37,7 @@ public class UserDao {
 			return user;
 		} else {
 			return entityManager.merge(user);
-		}		
+		}
 	}
 	
 }

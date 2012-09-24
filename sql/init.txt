@@ -9,6 +9,7 @@ CREATE TABLE person (
 	name		varchar(40) NOT NULL,
 	email		varchar(30) NOT NULL,
 	password	varchar(20) NOT NULL,
+        role    	varchar(12) NOT NULL,
 	created		date NOT NULL
 );
 CREATE TABLE job (

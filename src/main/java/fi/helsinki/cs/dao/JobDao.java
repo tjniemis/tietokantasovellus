@@ -28,6 +28,16 @@ public class JobDao {
 		return entityManager.createQuery("select j from Jobs j").getResultList();
 	}
         
+        /*
+         * Aktiiviset työt
+         * 
+         */
+        @SuppressWarnings("unchecked")
+        @Transactional(readOnly=true)
+	public List<Job> getActiveJobs() {
+		return entityManager.createQuery("select j from Job j where j.status = 0").getResultList();
+	}
+        
         /**
          * Ilmoitushistoria
          * 

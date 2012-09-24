@@ -5,17 +5,22 @@
 package fi.helsinki.cs.model;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -54,6 +59,13 @@ public class Job extends PersistentObject {
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="winning_offer_id")
     private Offer winningOffer;
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="job", fetch=FetchType.EAGER)
+    private List<Question> questions;
+    
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="job")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Offer> offers;
 
     /**
      * @return the title
@@ -179,5 +191,33 @@ public class Job extends PersistentObject {
      */
     public void setWinningOffer(Offer winningOffer) {
         this.winningOffer = winningOffer;
+    }
+
+    /**
+     * @return the questions
+     */
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    /**
+     * @param questions the questions to set
+     */
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    /**
+     * @return the offers
+     */
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    /**
+     * @param offers the offers to set
+     */
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 }

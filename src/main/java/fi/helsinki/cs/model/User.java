@@ -13,7 +13,7 @@ import javax.persistence.Table;
 public class User extends PersistentObject {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
         
         @Column
@@ -24,6 +24,11 @@ public class User extends PersistentObject {
         
         @Column
 	private String password;
+        
+        private String password_confirm;
+        
+        @Column
+        private String role = "ROLE_USER";
         
 	public User() {}
 
@@ -87,6 +92,20 @@ public class User extends PersistentObject {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the password_confirm
+     */
+    public String getPassword_confirm() {
+        return password_confirm;
+    }
+
+    /**
+     * @param password_confirm the password_confirm to set
+     */
+    public void setPassword_confirm(String password_confirm) {
+        this.password_confirm = password_confirm;
     }
 
 }
