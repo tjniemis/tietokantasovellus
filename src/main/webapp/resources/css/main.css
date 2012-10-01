@@ -20,7 +20,7 @@ button.smallbutton { width: 70px; height: 26px;}
 #dialog2 { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; }
 .lomake { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 10pt;}
 .headertext { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 8pt; text-align: left;}
-.jobtext  {style="font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt;}
+.jobtext  {style: font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt;}
 
 .errorblock {
 	color: #ff0000;

@@ -63,20 +63,13 @@ public class JobController {
             User user = null;
             if (principal!=null) {
                 user = userDao.findByEmail(principal.getName());                
-            } 
-            /*for (Job job : jobs) {
-                List<Question> questions = job.getQuestions();
-                for (Question question : questions) {
-                    Answer answer = answerDao.getAnswerByQuestion(question);
-                    question.setAnswer(answer);
-                }
-            }*/
+            }
             model.addAttribute("user", user); 
             model.addAttribute("jobs", jobs); 
             return "jobs";
 	}
         
-        @RequestMapping(value = "/addJob", method = { RequestMethod.PUT, RequestMethod.POST })
+        @RequestMapping(value = "/addJob", method = { RequestMethod.GET, RequestMethod.POST })
         public String addJob(@ModelAttribute("job") Job job, BindingResult result, Principal principal, Model model) {
             System.out.println("addjob");
             User user = userDao.findByEmail(principal.getName());
@@ -84,9 +77,6 @@ public class JobController {
             job.setUser(user);
             new JobValidator().validate(job, result);
             if (result.hasErrors()) {
-                for (ObjectError oe : result.getAllErrors()) {
-                    System.out.println(oe.toString());
-                }
                 result.getAllErrors();
                 return "createjob";
             } else {

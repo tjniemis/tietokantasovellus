@@ -84,12 +84,7 @@ public class OfferDao {
 
     @Transactional
     public Offer save(Offer offer) {
-            if (offer.getId() == null) {
-                    entityManager.persist(offer);
-                    return offer;
-            } else {
-                    return entityManager.merge(offer);
-            }
+        return entityManager.merge(offer);
     }
     
 }

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
@@ -7,38 +8,48 @@
 		<link type="text/css" href="resources/jquery-start/css/start/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
 		<script type="text/javascript" src="resources/jquery-start/js/jquery-1.8.0.min.js"></script>
 		<script type="text/javascript" src="resources/jquery-start/js/jquery-ui-1.8.23.custom.min.js"></script>
-		
+                <script type="text/javascript" src="resources/js/tsoha.js"></script>
 	</head>
 	<body style="text-align:center;">
             <jsp:include page="header.jsp"/>
 	<br>
 	<h1 class="header">TyölleTekijä!</h1>
-	<div id="radio2" class="mainbuttons">
-		<input type="radio" id="radio11" name="radio2" onclick="location.href='createJob'"/><label for="radio11">Ilmoita työ</label>
-		<input type="radio" id="radio22" checked="checked" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
-		<input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tiedot</label>
-	</div>
+        <c:if test="${user!=null}">
+            <div id="radio2" class="mainbuttons">
+                    <input type="radio" id="radio11" name="radio2" onclick="location.href='createJob'"/><label for="radio11">Ilmoita työ</label>
+                    <input type="radio" id="radio22" checked="checked" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
+                    <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tiedot</label>
+            </div>
+        </c:if>
 	<br><br>
 	<div id="accordion" class="acc">
             <c:forEach items="${jobs}" var="job" varStatus="status">
                     <h3><a href="#">${job.title}</a></h3>
                     <div>
-			<p align="left"><b>Työn kuvaus:</b> ${job.description}</p>
-			<p align="left"><b>Tarjousten deadline:</b> ${job.expires}</p>			
-                        <table cellpadding="0" cellspacing="0">
-                        <tr><td class="jobtext"><b>Tarjouksen hinta:</b></td><td align="left"><input type="text" size="30"/></td></tr>
-                        <tr><td valign="top" class="jobtext"><b>Tarjouksen teksti:</b></td><td align="left"><textarea rows="7" cols="46"></textarea></td></tr>				
+			<p align="left" class="jobtext"><b>Työn kuvaus:</b> ${job.description}</p>
+			<p align="left" class="jobtext"><b>Tarjousten deadline:</b> ${job.expires}</p>			
+                        				
                             <c:choose>
-                                <c:when test="${user!=null}">
-                                    <tr><td colspan="2" align="center">
-                                    <div class="omatbuttons">
-                                    <button onclick="location.href='makeOffer/${job.id}'">Tarjoa</button>
-                                    <button onclick="opendialog2();">Kysy</button>
-                                    </div>
-                                    </td></tr>
+                                <c:when test="${user!=null&&user.id!=job.user.id}">
+                                        <table cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td class="jobtext"><b>Tarjouksen hinta:</b></td><td align="left"><input type="text" size="30"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td valign="top" class="jobtext"><b>Tarjouksen teksti:</b></td><td align="left"><textarea rows="7" cols="46"></textarea></td>
+                                        </tr>  
+                                        <tr>
+                                            <td colspan="2" align="center">
+                                                <div class="omatbuttons">
+                                                    <button onclick="saveOffer();">Tarjoa</button>
+                                                    <button onclick="opendialog2();">Kysy</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </table>
                                 </c:when>  
-                            </c:choose>					
-                        </table>
+                            </c:choose>
+                        
 			<br><br>
 			<div id="tabs-${status.index}">
                             <ul>
@@ -49,10 +60,10 @@
                             <c:forEach items="${job.questions}" var="question">
                                 <table cellpadding="0" cellspacing="0">
                                 <tr><td width="500">
-                                <p class="jobtext"><b>Kysymys:</b>
+                                <p class="jobtext"><b class="jobtext">Kysymys:</b>
                                         ${question.question}
                                 </p>
-                                <p class="jobtext"><b>Vastaus:</b>
+                                <p class="jobtext"><b class="jobtext">Vastaus:</b>
                                     <c:choose>
                                         <c:when test="${question.answer!=null}">
                                             ${question.answer}
@@ -77,7 +88,6 @@
                             </div>
                             <c:if test="${job.user.id==user.id}">
                                 <div id="tabs-${status.index}-2">
-                                    <b>HUOM! Vain tilaaja näkee tämän osion!</b>
                                     <c:forEach items="${job.offers}" var="offer">					
                                         <p align="left" class="jobtext"><b>Tarjoaja: </b><a href="#">${offer.user.name}</a></br>
                                         <b>Hinta: </b>${offer.price}<br>
@@ -106,6 +116,12 @@
 			<button class="smallbutton">Kysy</button>
 		</div>
 	</div>
+        <div id="offerdialog">
+                <p>Tarjous talletettu onnistuneesti!</p>
+                <div class="smallbuttons">	
+                    <button class="smallbutton" onclick="closeDialog('#offerdialog');">Ok</button>
+		</div>
+        </div>
         <script>
             $(function() {
                     $( "button", ".mainbuttons, .omatbuttons, .smallbuttons" ).button();				
@@ -127,6 +143,12 @@
                     $( "#dialog2" ).dialog({
                             height: 179,
                             width: 310,
+                            modal: true, 
+                            autoOpen: false
+                    });
+                    $( "#offerdialog" ).dialog({
+                            height: 170,
+                            width: 250,
                             modal: true, 
                             autoOpen: false
                     });
