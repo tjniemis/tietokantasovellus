@@ -1,6 +1,5 @@
 package fi.helsinki.cs.controller;
 
-import java.util.List;
 
 import fi.helsinki.cs.dao.UserDao;
 import fi.helsinki.cs.model.User;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;

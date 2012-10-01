@@ -16,16 +16,21 @@ public class UserDao {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+        @SuppressWarnings("unchecked")
+        @Transactional(readOnly=true)
 	public User find(Long id) {
 		return entityManager.find(User.class, id);
 	}
 	
+        @SuppressWarnings("unchecked")
+        @Transactional(readOnly=true)
         public User findByEmail(String email) {
             TypedQuery<User> query = entityManager.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class);
             return query.setParameter("email", email).getSingleResult();
 	}
         
 	@SuppressWarnings("unchecked")
+        @Transactional(readOnly=true)
 	public List<User> getUsers() {
 		return entityManager.createQuery("select u from User u").getResultList();
 	}

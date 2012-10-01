@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,9 @@ public class JobDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
+        
+        @Autowired
+        private UserDao userDao;
 	
         @Transactional(readOnly=true)
 	public Job find(Long id) {
@@ -74,14 +78,28 @@ public class JobDao {
 		return query.getResultList();
 	}
 	
+        @SuppressWarnings("unchecked")
 	@Transactional
 	public Job save(Job job) {
-		if (job.getId() == null) {
-			entityManager.persist(job);
-			return job;
-		} else {
-			return entityManager.merge(job);
-		}
+            if (job.getId() == null) {
+                    entityManager.merge(job);
+                    return job;
+            } else {
+                    return entityManager.merge(job);
+            }
+	}
+        
+        @SuppressWarnings("unchecked")
+	@Transactional
+	public Job save2(Job job, Long owner_id) {
+            User user = userDao.find(owner_id);
+            job.setUser(user);
+            if (job.getId() == null) {
+                    entityManager.persist(job);
+                    return job;
+            } else {
+                    return entityManager.merge(job);
+            }
 	}
 	
 }

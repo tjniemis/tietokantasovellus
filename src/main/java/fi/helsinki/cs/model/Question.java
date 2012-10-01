@@ -7,13 +7,11 @@ package fi.helsinki.cs.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -29,6 +27,9 @@ public class Question extends PersistentObject {
     @Column
     private String question;
     
+    @Column
+    private String answer;
+    
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
@@ -36,10 +37,7 @@ public class Question extends PersistentObject {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="job_id")
     private Job job;
-
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="answer_id")
-    private Answer answer;
+    
     
     /**
      * @return the id
@@ -100,14 +98,14 @@ public class Question extends PersistentObject {
     /**
      * @return the answer
      */
-    public Answer getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
     /**
      * @param answer the answer to set
      */
-    public void setAnswer(Answer answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
     }
 
