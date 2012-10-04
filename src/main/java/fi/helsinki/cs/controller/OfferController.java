@@ -8,6 +8,8 @@ import fi.helsinki.cs.model.Job;
 import fi.helsinki.cs.model.Offer;
 import fi.helsinki.cs.model.User;
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,16 +41,25 @@ public class OfferController {
         @Autowired
 	private OfferDao offerDao;
         
-        @RequestMapping(value = "/addOffer/{jobId}", method = RequestMethod.POST) 
-        public @ResponseBody Offer addOffer(@RequestBody Offer offer, Principal principal, Model model, @PathVariable Long jobId) {
+        @RequestMapping(value = "/addOffer/{jobId}", method = RequestMethod.POST, produces="application/json") 
+        public @ResponseBody Map addOffer(@RequestBody Offer offer, Principal principal, Model model, @PathVariable Long jobId) {
             System.out.println("addOffer");
-            if (principal==null) return new Offer();
+
+            Map results = new HashMap();
+            if (principal==null) {
+                results.put("root", "no user");
+                return results;
+                //return "{\"root\":\"error\"}";
+            }
             User user = userDao.findByEmail(principal.getName());
             Job job = jobDao.find(jobId);
             offer.setJob(job);
             offer.setUser(user);
             offerDao.save(offer);
-            return offer;
+            
+            results.put("root", "success");
+            return results;
+            //return "{\"root\":\"success\"}";
         }
 
 }

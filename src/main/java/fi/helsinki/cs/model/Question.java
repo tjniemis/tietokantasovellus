@@ -7,6 +7,7 @@ package fi.helsinki.cs.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,11 +31,11 @@ public class Question extends PersistentObject {
     @Column
     private String answer;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.DETACH, fetch= FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.DETACH, fetch= FetchType.LAZY)
     @JoinColumn(name="job_id")
     private Job job;
     

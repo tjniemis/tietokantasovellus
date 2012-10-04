@@ -25,31 +25,26 @@
 	<div id="accordion" class="acc">
             <c:forEach items="${jobs}" var="job" varStatus="status">
                     <h3><a href="#">${job.title}</a></h3>
-                    <div>
-			<p align="left" class="jobtext"><b>Työn kuvaus:</b> ${job.description}</p>
-			<p align="left" class="jobtext"><b>Tarjousten deadline:</b> ${job.expires}</p>			
+                    <div align="left">
+                        <ul style="padding-left: 10px;">
+			<li class="jobtext"><b>Työn kuvaus:</b><br>${job.description}</li>
+			<li class="jobtext"><b>Tarjousten deadline:</b><br>${job.expires}</li>		
                         				
                             <c:choose>
                                 <c:when test="${user!=null&&user.id!=job.user.id}">
-                                        <table cellpadding="0" cellspacing="0">
-                                        <tr>
-                                            <td class="jobtext"><b>Tarjouksen hinta:</b></td><td align="left"><input type="text" size="30"/></td>
-                                        </tr>
-                                        <tr>
-                                            <td valign="top" class="jobtext"><b>Tarjouksen teksti:</b></td><td align="left"><textarea rows="7" cols="46"></textarea></td>
-                                        </tr>  
-                                        <tr>
-                                            <td colspan="2" align="center">
-                                                <div class="omatbuttons">
-                                                    <button onclick="saveOffer();">Tarjoa</button>
-                                                    <button onclick="opendialog2();">Kysy</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </table>
+                                    
+                                        <form id="${job.id}">
+                                        <li class="jobtext"><b>Tarjouksen hinta:</b><br><input type="text" size="18" name="price"/></li>
+                                        <li valign="top" class="jobtext"><b>Tarjouksen teksti:&nbsp;</b><br><textarea rows="5" cols="70" name="pricetext"></textarea></li>
+                                        </form>
+                                        <div class="omatbuttons" align="left">
+                                            <button onclick="saveOffer('${job.id}');">Tee tarjous</button>&nbsp;
+                                        </div>
+                                    
+                                    
                                 </c:when>  
                             </c:choose>
-                        
+                        </ul>
 			<br><br>
 			<div id="tabs-${status.index}">
                             <ul>
@@ -57,13 +52,18 @@
                                     <c:if test="${job.user.id==user.id}"><li><a href="#tabs-${status.index}-2">Tarjoukset</a></li></c:if>
                             </ul>
                             <div id="tabs-${status.index}-1" align="left" width="800">
+                            <c:if test="${job.user.id!=user.id}">
+                                <div class="omatbuttons" align="left" style="padding: 0px; margin-top: 0px;">
+                                    <button onclick="opendialog2('${job.id}');">Lähetä kysymys</button>
+                                </div>
+                                <br>
+                            </c:if>
+                                <ul id="q_${job.id}">                                
                             <c:forEach items="${job.questions}" var="question">
-                                <table cellpadding="0" cellspacing="0">
-                                <tr><td width="500">
-                                <p class="jobtext"><b class="jobtext">Kysymys:</b>
+                                <li class="jobtext"><b class="jobtext">Kysymys:</b>
                                         ${question.question}
-                                </p>
-                                <p class="jobtext"><b class="jobtext">Vastaus:</b>
+                                </li>
+                                <li class="jobtext"><b class="jobtext">Vastaus:</b>
                                     <c:choose>
                                         <c:when test="${question.answer!=null}">
                                             ${question.answer}
@@ -72,19 +72,17 @@
                                         <i>Työn tilaaja ei ole vielä vastannut kysymykseen.</i>
                                         </c:otherwise>
                                     </c:choose>
-                                </p>
-                                </td>
-                                <td width="300" align="right">
-                                        <div class="smallbuttons">	
+                                        <div class="smallbuttons" align="left">	
                                             <c:if test="${job.user.id==user.id}">
-                                                <button class="smallbutton" onclick="opendialog();">Vastaa</button>
+                                                <button class="smallbutton" onclick="opendialog(${question.id}, '${question.question}', '${question.answer}');">Vastaa</button>
                                                 <button class="smallbutton" onclick="location.href='removeQuestion/${question.id}'">Poista</button>
                                             </c:if>
                                         </div>
-                                </td></tr>
-                                </table>
+                                </li>                                  
+                                
                                 <hr>
                             </c:forEach>
+                                </ul>  
                             </div>
                             <c:if test="${job.user.id==user.id}">
                                 <div id="tabs-${status.index}-2">
@@ -104,16 +102,21 @@
                     
                 </c:forEach>
 	</div>
-	<div id="dialog" title="Vastaus">
-		<textarea rows="5" cols="44"></textarea>
-		<div class="smallbuttons">	
-			<button class="smallbutton">Vastaa</button>
+	<div id="dialog" title="Lisää vastaus">
+                <input type="hidden" id="q_dialog_id" value="" />
+                <div id="a_help"></div><br>
+		<textarea rows="5" cols="44" id="a_text"></textarea>
+		<div class="smallbuttons">
+			<button class="smallbutton" onclick="javascript:saveAnswer();">Vastaa</button>
+                        <button class="smallbutton" onclick="javascript:$( '#dialog' ).dialog('close');">Sulje</button>
 		</div>
 	</div>
-	<div id="dialog2" title="Kysymys">
-		<textarea rows="5" cols="44"></textarea>
+	<div id="dialog2" title="Lisää Kysymys">
+                <input type="hidden" id="q_job" value="" />
+		<textarea rows="5" cols="44" id="q_text"></textarea>
 		<div class="smallbuttons">	
-			<button class="smallbutton">Kysy</button>
+			<button class="smallbutton" onclick="javascript:saveQuestion();">Kysy</button>
+                        <button class="smallbutton" onclick="javascript:$( '#dialog2' ).dialog('close');">Sulje</button>
 		</div>
 	</div>
         <div id="offerdialog">
@@ -135,14 +138,14 @@
                     </c:forEach>
                     
                     $( "#dialog" ).dialog({
-                            height: 179,
-                            width: 310,
+                            height: 250,
+                            width: 400,
                             modal: true, 
                             autoOpen: false
                     });
                     $( "#dialog2" ).dialog({
-                            height: 179,
-                            width: 310,
+                            height: 200,
+                            width: 400,
                             modal: true, 
                             autoOpen: false
                     });
@@ -154,10 +157,14 @@
                     });
             });
 
-            function opendialog() {
+            function opendialog(questionId, question, answer) {
+                    document.getElementById('q_dialog_id').value = questionId;
+                    document.getElementById('a_help').innerHTML = question;
+                    document.getElementById('a_text').value = answer;
                     $( "#dialog" ).dialog('open');
             }
-            function opendialog2() {
+            function opendialog2(jobId) {
+                    document.getElementById('q_job').value = jobId;
                     $( "#dialog2" ).dialog('open');
             }
     </script>

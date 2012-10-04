@@ -28,6 +28,13 @@ public class QuestionDao {
     public Question find(Long id) {
             return entityManager.find(Question.class, id);
     }
+    
+    @Transactional
+    public Boolean delete(Long id) {
+            Question question =  entityManager.find(Question.class, id);
+            entityManager.remove(question);
+            return new Boolean(true);
+    }
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
@@ -45,12 +52,7 @@ public class QuestionDao {
 
     @Transactional
     public Question save(Question question) {
-            if (question.getId() == null) {
-                    entityManager.persist(question);
-                    return question;
-            } else {
-                    return entityManager.merge(question);
-            }
+        return entityManager.merge(question);
     }
     
 }
