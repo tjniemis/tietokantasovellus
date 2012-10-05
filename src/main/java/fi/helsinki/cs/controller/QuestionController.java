@@ -42,7 +42,7 @@ public class QuestionController {
 	private QuestionDao questionDao;
         
         @RequestMapping(value = "/addQuestion/{jobId}", method = RequestMethod.POST, produces="application/json") 
-        public @ResponseBody Map addQuestion(@RequestBody Question question, Principal principal, Model model, @PathVariable Long jobId) {
+        public @ResponseBody Map addQuestion(@RequestBody Question question, Principal principal, @PathVariable Long jobId) {
             System.out.println("addQuestion");
 
             Map results = new HashMap();
@@ -63,7 +63,7 @@ public class QuestionController {
         }
         
         @RequestMapping(value = "/addAnswer/{questionId}", method = RequestMethod.POST, produces="application/json") 
-        public @ResponseBody Map addAnswer(@RequestBody Question question, Principal principal, Model model, @PathVariable Long questionId) {
+        public @ResponseBody Map addAnswer(@RequestBody Question question, Principal principal, @PathVariable Long questionId) {
             System.out.println("addQuestion");
 
             Map results = new HashMap();
@@ -86,17 +86,18 @@ public class QuestionController {
         }
         
         @RequestMapping(value = "/deleteQuestion/{questionId}", method = RequestMethod.POST, produces="application/json") 
-        public @ResponseBody Map deleteQuestion(@RequestBody Question question, Principal principal, Model model, @PathVariable Long questionId) {
+        public @ResponseBody Map deleteQuestion(Principal principal, @PathVariable Long questionId) {
             System.out.println("deleteQuestion");
 
             Map results = new HashMap();
             if (principal==null) {
-                results.put("root", "no user");
+                results.put("success", "0");
+                results.put("exception", "no user");
                 return results;
             }
             User user = userDao.findByEmail(principal.getName());
             questionDao.delete(questionId);
-            results.put("root", "success");
+            results.put("success", "1");
             return results;
         }
 

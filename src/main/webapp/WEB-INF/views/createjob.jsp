@@ -23,7 +23,7 @@
 	<div id="radio2" class="mainbuttons">
 		<input type="radio" id="radio11" checked="checked" name="radio2" onclick="location.href='createjob'"/><label for="radio11">Ilmoita työ</label>
 		<input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
-		<input type="radio" id="radio33" name="radio2" onclick="location.href='omat.html'"/><label for="radio33">Omat tiedot</label>
+		<input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tiedot</label>
 	</div>
 	<br><br>
 	<h2>Ilmoita työ</h2>

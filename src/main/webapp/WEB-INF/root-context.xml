@@ -27,13 +27,22 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
         
-	<!--<security:authentication-manager>
-            <security:authentication-provider>
-                <security:user-service>
-                    <security:user name="jimi" password="password" authorities="ROLE_USER, ROLE_ADMIN" />
-                    <security:user name="bob" password="password" authorities="ROLE_USER" />
-                </security:user-service>
-            </security:authentication-provider>
-        </security:authentication-manager>-->
-         
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <property name="host" value="smtp.helsinki.fi"/>
+            <property name="port" value="587"/>
+            <property name="username" value="tjniemis"/>
+            <property name="password" value="IndianaJ0nes"/>
+            <property name="javaMailProperties">
+                <props>
+                    <!-- Use SMTP transport protocol -->
+                    <prop key="mail.transport.protocol">smtp</prop>
+                    <!-- Use SMTP-AUTH to authenticate to SMTP server -->
+                    <prop key="mail.smtp.auth">true</prop>
+                    <!-- Use TLS to encrypt communication with SMTP server -->
+                    <prop key="mail.smtp.starttls.enable">true</prop>
+                    <prop key="mail.debug">true</prop>
+                </props>
+            </property>
+        </bean>
+        
 </beans>

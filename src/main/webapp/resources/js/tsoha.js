@@ -70,16 +70,35 @@ function saveAnswer() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         data: json,
-        success: function(data){
-		$(function() {
-		    $( "#dialog2" ).dialog('close');
-		});
+        success: function(data){		
+		var divid = "q_a_"+q_dialog_id;
+		document.getElementById(divid).innerHTML = data.answer;		
 		document.getElementById('a_text').value = "";
+		$(function() {
+		    $( "#dialog" ).dialog('close');
+		});
         },
         error: function (xhr, ajaxOptions, thrownError, data) {
         	alert(data.exception);
       },
         type: 'POST',
         url: 'addAnswer/'+q_dialog_id
+    });
+}
+
+function deleteQuestion(questionId) {
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: "",
+        success: function(data){
+		var divid = "question_id_"+questionId;
+		document.getElementById(divid).innerHTML = "";	
+        },
+        error: function (xhr, ajaxOptions, thrownError, data) {
+        	alert(data.exception);
+      },
+        type: 'POST',
+        url: 'deleteQuestion/'+questionId
     });
 }

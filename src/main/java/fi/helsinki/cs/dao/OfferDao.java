@@ -28,6 +28,17 @@ public class OfferDao {
     public Offer find(Long id) {
             return entityManager.find(Offer.class, id);
     }
+    
+    @Transactional
+    public Boolean remove(Long id) {
+            //Offer offer = entityManager.find(Offer.class, id);
+            //System.out.println("offer.id: "+offer.getId());
+            //offer.setJob(null);
+            //offer.setUser(null);
+            //offer = entityManager.merge(offer);
+            entityManager.createNativeQuery("delete from Offer where id="+id).executeUpdate();
+            return new Boolean(true);
+    }
 
     /**
      * Kaikki tarjoukset
@@ -63,7 +74,7 @@ public class OfferDao {
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
     public List<Offer> getOffersByJob(Job job) {
-            Query query = entityManager.createQuery("select j from Offer j where j.job = :job");
+            Query query = entityManager.createQuery("select j from Offer j where j.job = :job and j.job.status = 1");
             query.setParameter("job", job);
             return query.getResultList();
     }

@@ -7,6 +7,7 @@ import fi.helsinki.cs.dao.UserDao;
 import fi.helsinki.cs.model.Job;
 import fi.helsinki.cs.model.Offer;
 import fi.helsinki.cs.model.User;
+import fi.helsinki.cs.util.MailService;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +42,9 @@ public class OfferController {
         @Autowired
 	private OfferDao offerDao;
         
+        @Autowired
+	private MailService mailService;
+        
         @RequestMapping(value = "/addOffer/{jobId}", method = RequestMethod.POST, produces="application/json") 
         public @ResponseBody Map addOffer(@RequestBody Offer offer, Principal principal, Model model, @PathVariable Long jobId) {
             System.out.println("addOffer");
@@ -49,7 +53,6 @@ public class OfferController {
             if (principal==null) {
                 results.put("root", "no user");
                 return results;
-                //return "{\"root\":\"error\"}";
             }
             User user = userDao.findByEmail(principal.getName());
             Job job = jobDao.find(jobId);
@@ -59,7 +62,33 @@ public class OfferController {
             
             results.put("root", "success");
             return results;
-            //return "{\"root\":\"success\"}";
+        }
+        
+        @RequestMapping(value = "/acceptOffer/{offerId}", method = RequestMethod.GET) 
+        public String acceptOffer(Principal principal, Model model, @PathVariable Long offerId) {
+            System.out.println("acceptOffer");
+            if (principal==null) {
+                return "redirect:../logout";
+            }
+            User user = userDao.findByEmail(principal.getName());
+            Offer offer = offerDao.find(offerId);
+            Job job = jobDao.find(offer.getJob().getId());
+            job.setWinningOffer(offer);
+            job.setStatus(new Integer(1));
+            jobDao.save(job);
+            mailService.acceptOfferMails(user, job, offerId);
+            return "redirect:../jobs";
+        }
+        
+        @RequestMapping(value = "/removeOffer/{offerId}", method = RequestMethod.GET) 
+        public String removeOffer(Principal principal, Model model, @PathVariable Long offerId) {
+            System.out.println("removeOffer");
+            if (principal==null) {
+                return "redirect:../logout";
+            }
+            //User user = userDao.findByEmail(principal.getName());
+            offerDao.remove(offerId);
+            return "redirect:../jobs";
         }
 
 }

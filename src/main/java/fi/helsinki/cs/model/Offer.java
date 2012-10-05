@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PreRemove;
 
 /**
  *
@@ -30,13 +31,20 @@ public class Offer extends PersistentObject {
     @Column
     private String description;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name="user_id")
     private User user;
     
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name="job_id")
     private Job job;
+    
+    @PreRemove
+    public void preRemove() {
+        System.out.println("Offer.preRemove()");
+        setUser(null);
+        setJob(null);
+    }
 
     /**
      * @return the id

@@ -23,13 +23,13 @@ public class JobDao {
 	
         @Transactional(readOnly=true)
 	public Job find(Long id) {
-		return entityManager.find(Job.class, id);
+            return entityManager.find(Job.class, id);
 	}
         
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getJobs() {
-		return entityManager.createQuery("select j from Jobs j").getResultList();
+            return entityManager.createQuery("select j from Job j").getResultList();
 	}
         
         /*
@@ -39,7 +39,7 @@ public class JobDao {
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getActiveJobs() {
-		return entityManager.createQuery("select j from Job j where j.status = 0").getResultList();
+            return entityManager.createQuery("select j from Job j where j.status = 0").getResultList();
 	}
         
         /**
@@ -49,9 +49,9 @@ public class JobDao {
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getJobsByUser(User user) {
-                Query query = entityManager.createQuery("select j from Job j where j.user = :user");
-                query.setParameter("user", user);
-		return query.getResultList();
+            Query query = entityManager.createQuery("select j from Job j where j.user = :user and j.status = 1");
+            query.setParameter("user", user);
+            return query.getResultList();
 	}
         
         /**
@@ -61,9 +61,9 @@ public class JobDao {
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getActiveJobsByUser(User user) {
-                Query query = entityManager.createQuery("select j from Job j where j.user = :user and j.status = 0");
-                query.setParameter("user", user);
-		return query.getResultList();
+            Query query = entityManager.createQuery("select j from Job j where j.user = :user and j.status = 0");
+            query.setParameter("user", user);
+            return query.getResultList();
 	}
         
         /**
@@ -73,33 +73,15 @@ public class JobDao {
         @SuppressWarnings("unchecked")
         @Transactional(readOnly=true)
 	public List<Job> getJobHistoryByUser(User user) {
-                Query query = entityManager.createQuery("select j from Job j, Offer o where j.winningOffer=o.id and o.user=:user");
-                query.setParameter("user", user);
-		return query.getResultList();
+            Query query = entityManager.createQuery("select j from Job j, Offer o where j.winningOffer=o.id and o.user=:user and j.status = 1");
+            query.setParameter("user", user);
+            return query.getResultList();
 	}
 	
         @SuppressWarnings("unchecked")
 	@Transactional
 	public Job save(Job job) {
-            if (job.getId() == null) {
-                    entityManager.merge(job);
-                    return job;
-            } else {
-                    return entityManager.merge(job);
-            }
-	}
-        
-        @SuppressWarnings("unchecked")
-	@Transactional
-	public Job save2(Job job, Long owner_id) {
-            User user = userDao.find(owner_id);
-            job.setUser(user);
-            if (job.getId() == null) {
-                    entityManager.persist(job);
-                    return job;
-            } else {
-                    return entityManager.merge(job);
-            }
+            return entityManager.merge(job);
 	}
 	
 }

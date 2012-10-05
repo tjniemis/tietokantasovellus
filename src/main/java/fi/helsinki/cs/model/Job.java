@@ -66,6 +66,9 @@ public class Job extends PersistentObject {
     @OneToMany(cascade=CascadeType.ALL, mappedBy="job")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Offer> offers;
+    
+    //Used only in UI, not to be persisted
+    private transient boolean show = true;
 
     /**
      * @return the title
@@ -219,5 +222,26 @@ public class Job extends PersistentObject {
      */
     public void setOffers(List<Offer> offers) {
         this.offers = offers;
+    }
+
+    /**
+     * @return the show
+     */
+    public boolean getShow() {
+        return show;
+    }
+    
+    /**
+     * @return the show
+     */
+    public boolean isShow() {
+        return show;
+    }
+
+    /**
+     * @param show the show to set
+     */
+    public void setShow(boolean show) {
+        this.show = show;
     }
 }

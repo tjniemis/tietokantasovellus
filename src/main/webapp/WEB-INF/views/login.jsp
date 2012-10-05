@@ -9,7 +9,7 @@
 		<script type="text/javascript" src="resources/jquery-start/js/jquery-ui-1.8.23.custom.min.js"></script>
 		<script>
 			$(function() {
-				$( "button", ".smallbuttons" ).button();	
+				$( "input:submit, button", ".smallbuttons" ).button();
 				$( "#radio2" ).buttonset();		
 				$( "#datepicker" ).datepicker({ dateFormat: "dd.mm.yy" });	
 			});
@@ -24,13 +24,14 @@
                 <form name='f' action="<c:url value='j_spring_security_check' />" method='POST'>
                     <tr><td><b>Sähköposti:</b></td><td><input type="text" name="j_username" size="40"/></td></tr>
                     <tr><td><b>Salasana:</b></td><td><input type="password" name="j_password"  size="40"/></td></tr>
-                </form>
+                
 		<tr><td colspan="2" align="center">
 		<div class="smallbuttons">
-			<button class="ilmoitabutton" onclick="document.f.submit();">Kirjaudu</button>
+			<input type="submit" class="ilmoitabutton" onclick="document.f.submit();" value="Kirjaudu" />
 			<button class="ilmoitabutton" onclick="location.href='register'">Rekisteröidy</button>
-		</div>
+		</div>                        
 		</td></tr>
+                </form>
 		</table>
             
 	</div>
