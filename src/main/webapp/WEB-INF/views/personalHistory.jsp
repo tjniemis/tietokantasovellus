@@ -11,9 +11,10 @@
                 <script type="text/javascript" src="resources/js/tsoha.js"></script>
                 <script>
 			$(function() {
-				$( "button", ".mainbuttons, .omatbuttons" ).button();				
+				$( "button", ".mainbuttons, .omatbuttons, .smallbuttons" ).button();				
 				$( "#radio" ).buttonset();
 				$( "#radio2" ).buttonset();
+                                $( "#radio3" ).buttonset();
 				$( "#accordion" ).accordion({
 					collapsible: true
 				});
@@ -29,6 +30,7 @@
 		<input type="radio" id="radio22" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
 		<input type="radio" id="radio23" checked="checked" onclick="location.href='personalData'"/><label for="radio23">Omat tiedot</label>
 	</div>
+        
 	<div id="radio" class="omatbuttons">
                 <input type="radio" id="radio11" name="radio" onclick="location.href='personalData'"/><label for="radio11">Aktiiviset tarjoukset</label>
 		<input type="radio" id="radio12" name="radio" onclick="location.href='personalJobs'"/><label for="radio12">Aktiiviset ilmoitukset</label>
@@ -39,7 +41,7 @@
 	</div>
 	<br><br>
         <c:if test="${empty jobs}">
-                <i>Ei ilmoitushistoriaa</i>
+                <i>Sinulta ei löydy vanhoja ilmoituksia</i>
         </c:if>
 	<div id="accordion" class="acc">            
             <c:forEach items="${jobs}" var="job" varStatus="status">
@@ -53,10 +55,52 @@
                         <b>Voittanut tarjoushinta</b><br>${job.winningOffer.price}<br><br>
                         <b>Voittanut tarjoussisältö</b><br>${job.winningOffer.description}<br><br>
                     </li>
+                    <c:if test="${job.review==null}">
+                    <div class="omatbuttons" align="left" style="margin-top: 10px;">
+                        <button onclick="opendialog('${job.winningOffer.user.id}', '${job.winningOffer.user.name}', '${job.id}');">Arvioi työn suorittaja</button>&nbsp;
+                    </div>
+                    </c:if>
                 </ul>
                 </div>
             </c:forEach>
 	</div>
+        <div id="dialog" title="Kirjoita arvio">
+            <input type="hidden" id="user_id" value="" />
+            <input type="hidden" id="job_id" value="" />
+            <div id="user_name"></div><br>
+            <b>Tähdet:</b><br>
+            <div id="radio3" class="mainbuttons" style="margin-top: 5px; margin-bottom: 10px;">
+                
+                <input type="radio" id="radio_r_1" name="r_rating" value="1"/><label for="radio_r_1">&#9734;</label>
+                <input type="radio" id="radio_r_2" name="r_rating" value="2"/><label for="radio_r_2">&#9734;&#9734;</label>
+                <input type="radio" id="radio_r_3" name="r_rating" value="3"/><label for="radio_r_3">&#9734;&#9734;&#9734;</label>
+                <input type="radio" id="radio_r_4" name="r_rating" value="4"/><label for="radio_r_4">&#9734;&#9734;&#9734;&#9734;</label>
+                <input type="radio" id="radio_r_5" name="r_rating" value="5"/><label for="radio_r_5">&#9734;&#9734;&#9734;&#9734;&#9734;</label>
+            </div>
+            <b>Arvio:</b><br>
+            <textarea rows="5" cols="44" id="r_text"></textarea>
+            <div class="smallbuttons">
+                    <button class="smallbutton" onclick="reviewJob();">Tallenna</button>
+                    <button class="smallbutton" onclick="javascript:$( '#dialog' ).dialog('close');">Sulje</button>
+            </div>
+        </div>        
+        <script>
+            $(function() {
+                    $( "#dialog" ).dialog({
+                            height: 300,
+                            width: 400,
+                            modal: true, 
+                            autoOpen: false
+                    });
+            });
+            function opendialog(userId, userName, jobId) {
+                document.getElementById('user_id').value = userId;
+                document.getElementById('job_id').value = jobId;
+                document.getElementById('user_name').innerHTML = 'Arvioi työn tekijä <b>'+userName+'</b>';
+                document.getElementById('r_text').value = '';
+                $( "#dialog" ).dialog('open');
+            }
+        </script>
 	</body>
 </html>
 

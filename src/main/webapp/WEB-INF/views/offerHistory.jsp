@@ -39,7 +39,7 @@
 	</div>
 	<br><br>
         <c:if test="${empty offers}">
-                <i>Ei tarjoushistoriaa</i>
+                <i>Sinulla ei ole vanhentuneita tarjouksia.</i>
         </c:if>
 	<div id="accordion" class="acc">
             <c:forEach items="${offers}" var="offer" varStatus="status">
@@ -53,10 +53,13 @@
                         <b>Tarjottu hinta:</b><br>${offer.price}<br><br>
                         <b>Tarjouksen sisältö:</b><br>${offer.description}<br><br>
                     </li>
+                    
                 </ul>                    
                 </div>
             </c:forEach>
 	</div>
+        
+        
 	</body>
 </html>
 

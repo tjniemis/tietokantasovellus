@@ -25,13 +25,26 @@ public class User extends PersistentObject {
         @Column
 	private String password;
         
-        private String password_confirm;
+        private transient String password_confirm;
+        
+        private transient Integer average_rating;
         
         @Column
         private String role = "ROLE_USER";
         
 	public User() {}
 
+        public String getStars() {
+            String s = "";
+            if (average_rating==null) return s;
+            else {
+                for (int i=0; i<average_rating.intValue(); i++) {
+                    s += "&#9733;";
+                }
+            }
+            return s;
+        }
+        
         /**
          * @return the name
          */
@@ -106,6 +119,20 @@ public class User extends PersistentObject {
      */
     public void setPassword_confirm(String password_confirm) {
         this.password_confirm = password_confirm;
+    }
+
+    /**
+     * @return the average_rating
+     */
+    public Integer getAverage_rating() {
+        return average_rating;
+    }
+
+    /**
+     * @param average_rating the average_rating to set
+     */
+    public void setAverage_rating(Integer average_rating) {
+        this.average_rating = average_rating;
     }
 
 }

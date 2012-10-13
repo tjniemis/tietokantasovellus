@@ -22,28 +22,29 @@
             </div>
         </c:if>
         <br>
-        <h3>Alla listattuna työt joihin voit tehdä tarjouksen</h3>
+        <h3>Alla listattuna työt joihin voit tehdä tarjouksen. Aktiiviset tarjouksesi löydät Omat tiedot-osiosta.</h3>
 	<div id="accordion" class="acc">
             <c:forEach items="${jobs}" var="job" varStatus="status">
                 <c:choose>
-                                <c:when test="${job.show}">
+                    <c:when test="${job.show}">
                     <h3><a href="#">${job.title}</a></h3>
                     <div align="left">
                         <ul style="padding-left: 10px;">
 			<li class="jobtext"><b>Työn kuvaus:</b><br>${job.description}</li>
 			<li class="jobtext"><b>Tarjousten deadline:</b><br>${job.expires}</li>		
                         				
-                            <c:if test="${user!=null&&user.id!=job.user.id}">
-                                                                           
-                                    <form id="${job.id}">
-                                    <li class="jobtext"><b>Tarjouksen hinta:</b><br><input type="text" size="18" name="price"/></li>
-                                    <li valign="top" class="jobtext"><b>Tarjouksen teksti:&nbsp;</b><br><textarea rows="5" cols="70" name="pricetext"></textarea></li>
-                                    </form>
-                                    <div class="omatbuttons" align="left">
-                                        <button onclick="saveOffer('${job.id}');">Tee tarjous</button>&nbsp;
-                                    </div>                                    
-                                
-                            </c:if>
+                        <c:if test="${user!=null&&user.id!=job.user.id}">
+                            <div id="offer_${job.id}">
+                                <form id="${job.id}">
+                                <li class="jobtext"><b>Tarjouksen hinta:</b><br><input type="text" size="18" name="price"/></li>
+                                <li valign="top" class="jobtext"><b>Tarjouksen teksti:&nbsp;</b><br><textarea rows="5" cols="70" name="pricetext"></textarea></li>
+                                </form>
+                                <div class="omatbuttons" align="left">
+                                    <button onclick="saveOffer('${job.id}');">Tee tarjous</button>&nbsp;
+                                </div>         
+                            </div>
+                        </c:if>
+                        
                         </ul>
 			<br><br>
 			<div id="tabs-${status.index}">
@@ -107,6 +108,8 @@
                     </c:choose>
                 </c:forEach>
 	</div>
+        
+        <!-- Dialog used -->
 	<div id="dialog" title="Lisää vastaus">
                 <input type="hidden" id="q_dialog_id" value="" />
                 <div id="a_help"></div><br>
@@ -130,6 +133,8 @@
                     <button class="smallbutton" onclick="closeDialog('#offerdialog');">Ok</button>
 		</div>
         </div>
+        <!-- End of dialogs -->
+        
         <script>
             $(function() {
                     $( "button", ".mainbuttons, .omatbuttons, .smallbuttons" ).button();				

@@ -3,6 +3,7 @@ package fi.helsinki.cs.controller;
 
 import fi.helsinki.cs.dao.JobDao;
 import fi.helsinki.cs.dao.OfferDao;
+import fi.helsinki.cs.dao.ReviewDao;
 import fi.helsinki.cs.dao.UserDao;
 import fi.helsinki.cs.model.Job;
 import fi.helsinki.cs.model.Offer;
@@ -12,8 +13,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -27,7 +26,9 @@ public class PersonalDataController {
         
         @Autowired
 	private OfferDao offerDao;
-
+        
+        @Autowired
+	private ReviewDao reviewDao;
         
         @RequestMapping("/personalData")
         public String personalData(Model model, Principal principal) {
@@ -54,6 +55,15 @@ public class PersonalDataController {
                 user = userDao.findByEmail(principal.getName());                
             }
             List<Job> jobs = jobDao.getActiveJobsByUser(user);
+            //TODO: Lisää arviot
+            for (Job job : jobs) {
+                List<Offer> offers = job.getOffers();
+                for (Offer offer : offers) {
+                    User user2 = offer.getUser();
+                    Integer rating = reviewDao.getAverageRatingByUser(user2.getId());
+                    user2.setAverage_rating(rating);
+                }
+            }
             model.addAttribute("user", user); 
             model.addAttribute("jobs", jobs);
             return "personalJobs";

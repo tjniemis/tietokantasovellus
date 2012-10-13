@@ -2,23 +2,21 @@ truncate table person cascade;
 truncate table job cascade;
 truncate table offer cascade;
 truncate table question cascade;
-truncate table answer cascade;
+truncate table review cascade;
 
-insert into person (created, email, name, password) values (CURRENT_TIMESTAMP, 'macgyver@email.com', 'Macgyver', 'password');
-insert into person (created, email, name, password) values (CURRENT_TIMESTAMP, 'bond@email.com', 'James Bond', 'password');
-insert into person (created, email, name, password) values (CURRENT_TIMESTAMP, 'homer@email.com', 'Homer Simpson', 'password');
+insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'macgyver@email.com', 'Macgyver', 'password', 'ROLE_USER');
+insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'bond@email.com', 'James Bond', 'password', 'ROLE_USER');
+insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'homer@email.com', 'Homer Simpson', 'password', 'ROLE_USER');
 
-insert into job (description, expires, rating, review, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 1', TIMESTAMP '2012-10-10', null, null, 0, 'Työ 1', 3, null, CURRENT_TIMESTAMP);
-insert into job (description, expires, rating, review, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 2', TIMESTAMP '2012-11-11', null, null, 0, 'Työ 2', 3, null, CURRENT_TIMESTAMP);
-insert into job (description, expires, rating, review, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 3', TIMESTAMP '2012-01-10', null, null, 0, 'Työ 3', 3, null, CURRENT_TIMESTAMP);
-insert into job (description, expires, rating, review, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 4', TIMESTAMP '2012-09-10', null, null, 0, 'Työ 4', 3, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 1', TIMESTAMP '2012-10-10', 0, 'Työ 1', 6, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 2', TIMESTAMP '2012-11-11', 0, 'Työ 2', 6, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 3', TIMESTAMP '2012-01-10', 0, 'Työ 3', 6, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 4', TIMESTAMP '2012-09-10', 0, 'Työ 4', 6, null, CURRENT_TIMESTAMP);
 
-insert into offer (description, price, job_id, user_id, created) values ('Tarjous 1 by Macgyver', 1000, 1, 1, CURRENT_TIMESTAMP);
-insert into offer (description, price, job_id, user_id, created) values ('Tarjous 1 by Bond', 1001, 1, 2, CURRENT_TIMESTAMP);
-insert into offer (description, price, job_id, user_id, created) values ('Tarjous 2 by Macgyver', 999, 2, 1, CURRENT_TIMESTAMP);
-insert into offer (description, price, job_id, user_id, created) values ('Tarjous 4 by Bond', 10000, 4, 2, CURRENT_TIMESTAMP);
+insert into offer (description, price, job_id, user_id, created) values ('Tarjous 1 by Macgyver', 1000, 1, 4, CURRENT_TIMESTAMP);
+insert into offer (description, price, job_id, user_id, created) values ('Tarjous 1 by Bond', 1001, 1, 5, CURRENT_TIMESTAMP);
+insert into offer (description, price, job_id, user_id, created) values ('Tarjous 2 by Macgyver', 999, 2, 4, CURRENT_TIMESTAMP);
+insert into offer (description, price, job_id, user_id, created) values ('Tarjous 4 by Bond', 10000, 4, 5, CURRENT_TIMESTAMP);
 
-insert into question (created, question, job_id, user_id, answer_id) values (CURRENT_TIMESTAMP, 'Kysymys 1?', 1, 1, null);
-insert into question (created, question, job_id, user_id, answer_id) values (CURRENT_TIMESTAMP, 'Kysymys 2?', 1, 2, null);
-
-insert into answer  (created, answer, question_id) values (CURRENT_TIMESTAMP, 'Vastaus 1', 1);
+insert into question (created, question, job_id, user_id, answer) values (CURRENT_TIMESTAMP, 'Kysymys 1?', 1, 4, 'Vastaus 1');
+insert into question (created, question, job_id, user_id, answer) values (CURRENT_TIMESTAMP, 'Kysymys 2?', 1, 5, null);

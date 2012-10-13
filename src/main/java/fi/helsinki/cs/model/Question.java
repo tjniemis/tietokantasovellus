@@ -22,7 +22,7 @@ import javax.persistence.ManyToOne;
 public class Question extends PersistentObject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column

@@ -39,7 +39,7 @@ public class OfferDaoTest {
      */
     @Test
     public void testGetOffersByUser() {
-        User user = userDao.find(new Long(1));
+        User user = userDao.findByEmail("bond@email.com");
         List<Offer> offers = offerDao.getOffersByUser(user);
         assertNotNull(offers);
     }
@@ -49,7 +49,7 @@ public class OfferDaoTest {
      */
     @Test
     public void testGetOffersByJob() {
-        Job job = jobDao.find(new Long(1));
+        Job job = jobDao.find(new Long(9));
         List<Offer> offers = offerDao.getOffersByJob(job);
         assertTrue(true);
     }
@@ -59,7 +59,7 @@ public class OfferDaoTest {
      */
     @Test
     public void testGetActiveOffersByUser() {
-        User user = userDao.find(new Long(1));
+        User user =  userDao.findByEmail("bond@email.com");
         List<Offer> offers = offerDao.getActiveOffersByUser(user);
         assertNotNull(offers);
     }
@@ -74,7 +74,7 @@ public class OfferDaoTest {
         offer.setPrice(new Double(100));
         Job job = jobDao.find(new Long(1));
         offer.setJob(job);
-        User user = userDao.find(new Long(1)); //Macgyver
+        User user = userDao.findByEmail("bond@email.com");
         offer.setUser(user);
         Offer result = offerDao.save(offer);
         assertEquals(offer.getDescription(), result.getDescription());

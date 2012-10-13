@@ -30,7 +30,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 public class Job extends PersistentObject {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column
@@ -44,13 +44,7 @@ public class Job extends PersistentObject {
     private Date expires;
     
     @Column
-    private String review;
-    
-    @Column
     private Integer status;
-    
-    @Column
-    private Integer rating;
     
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="owner_id")
@@ -66,6 +60,10 @@ public class Job extends PersistentObject {
     @OneToMany(cascade=CascadeType.ALL, mappedBy="job")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Offer> offers;
+    
+    @OneToOne(cascade=CascadeType.ALL, orphanRemoval=true)
+    @JoinColumn(name="review_id")
+    private Review review;
     
     //Used only in UI, not to be persisted
     private transient boolean show = true;
@@ -115,14 +113,14 @@ public class Job extends PersistentObject {
     /**
      * @return the review
      */
-    public String getReview() {
+    public Review getReview() {
         return review;
     }
 
     /**
      * @param review the review to set
      */
-    public void setReview(String review) {
+    public void setReview(Review review) {
         this.review = review;
     }
 
@@ -138,20 +136,6 @@ public class Job extends PersistentObject {
      */
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    /**
-     * @return the rating
-     */
-    public Integer getRating() {
-        return rating;
-    }
-
-    /**
-     * @param rating the rating to set
-     */
-    public void setRating(Integer rating) {
-        this.rating = rating;
     }
 
     /**

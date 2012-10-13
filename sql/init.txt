@@ -1,8 +1,9 @@
 drop table person cascade;
+drop table review cascade;
 drop table job cascade;
 drop table offer cascade;
 drop table question cascade;
-drop table answer cascade;
+
 
 CREATE TABLE person (
 	id		serial PRIMARY KEY,
@@ -12,15 +13,22 @@ CREATE TABLE person (
         role    	varchar(12) NOT NULL,
 	created		date NOT NULL
 );
+CREATE TABLE review (
+	id		serial PRIMARY KEY,
+	user_id		integer NOT NULL references person,
+	review_user_id	integer NOT NULL references person,
+	review		text,
+	rating		integer NOT NULL,
+	created		date NOT NULL
+);
 CREATE TABLE job (
 	id		serial PRIMARY KEY,
 	title		varchar(50) NOT NULL,
 	description	varchar(50),
 	expires		date NOT NULL,
 	status		integer NOT NULL,	
-	winning_offer_id	integer, 
-	rating		integer,	
-	review		text,
+	winning_offer_id	integer, 	
+	review		integer references review,
 	owner_id	integer NOT NULL references person,
 	created		date NOT NULL
 );
@@ -32,17 +40,11 @@ CREATE TABLE offer (
 	description	text,
 	created		date NOT NULL
 );
-CREATE TABLE answer (
-	id		serial PRIMARY KEY,
-	question_id	integer NOT NULL,
-	answer		text NOT NULL,
-	created		date NOT NULL
-);
 CREATE TABLE question (
 	id		serial PRIMARY KEY,
 	user_id		integer NOT NULL references person,
 	job_id		integer NOT NULL references job,
-        answer_id	integer references answer,
+        answer		text,
 	question	text NOT NULL,
 	created		date NOT NULL
 );

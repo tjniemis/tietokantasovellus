@@ -16,7 +16,7 @@ function saveOffer(formId) {
         dataType: "json",
         data: json,
         success: function(data){
-		
+	    document.getElementById('offer_'+formId).innerHTML = '<i>Olet jo jättänyt työlle tarjouksen. Voit tarkastella tarjoustasi ja halutessasi poistaa sen Omat tiedot-osiosta.</i>';
             $(function() {
                     $( "#offerdialog" ).dialog('open');
             });
@@ -100,5 +100,61 @@ function deleteQuestion(questionId) {
       },
         type: 'POST',
         url: 'deleteQuestion/'+questionId
+    });
+}
+
+function reviewJob() {
+    var user_id = document.getElementById('user_id').value;
+    var job_id = document.getElementById('job_id').value;
+    var r_text = document.getElementById('r_text').value;
+    var r_rating = $("input:radio[name=r_rating]:checked").val();
+    var json = '{"rating": "'+r_rating+'", "review" : "'+r_text+'"}';
+    //alert(json);
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: json,
+        success: function(data){		
+		
+		$(function() {
+		    $( "#dialog" ).dialog('close');
+		});
+		window.location.reload();
+        },
+        error: function (xhr, ajaxOptions, thrownError, data) {
+        	alert(data.exception);
+      },
+        type: 'POST',
+        url: 'reviewUser/'+user_id+'/'+job_id
+    });
+}
+
+function getUserReviews(userId) {
+    var json = '';
+    //alert(json);
+    $.ajax({
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        data: json,
+        success: function(data){
+		var reviews = '<ul>';
+		jQuery.each(data.reviews, function() {
+			reviews += '<li class=\"jobtext\">';
+			var stars = '';
+			for (var i=0; i<this.rating; i++) {
+				stars += '&#9733;';
+			}
+			reviews += '<b>Tähdet:</b> '+stars+'<br>';
+			reviews += '<b>Arvio:</b> '+this.review;
+			reviews += '<hr></li>';
+		});	
+		reviews += '</ul>';
+		document.getElementById('reviews').innerHTML = reviews;
+        },
+        error: function (xhr, ajaxOptions, thrownError, data) {
+        	alert(data.exception);
+      },
+        type: 'POST',
+        url: 'getReviews/'+userId
     });
 }

@@ -40,7 +40,7 @@
 	</div>
 	<br><br>
         <c:if test="${empty offers}">
-                <i>Ei aktiivisia tarjouksia</i>
+                <i>Sinulla ei ole aktiivisia tarjouksia töistä.</i>
         </c:if>
 	<div id="accordion" class="acc">
             <c:forEach items="${offers}" var="offer" varStatus="status">

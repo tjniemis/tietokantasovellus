@@ -29,7 +29,7 @@
 	</div>
 	<br><br>
         <c:if test="${empty jobs}">
-                <i>Ei aktiivisia ilmoituksia</i>
+                <i>Sinulla ei ole aktiivisia työilmoituksia.</i>
         </c:if>
 	<div id="accordion" class="acc">            
             <c:forEach items="${jobs}" var="job" varStatus="status">
@@ -76,9 +76,11 @@
                     </div>
                     <div id="tabs-${status.index}-2">
                         <c:forEach items="${job.offers}" var="offer">					
-                            <p align="left" class="jobtext"><b>Tarjoaja: </b><a href="#">${offer.user.name}</a></br>
-                            <b>Hinta: </b>${offer.price}<br>
-                            <b>Teksti: </b>${offer.description}</p>
+                            <p align="left" class="jobtext">
+                                <b>Tarjoaja: </b><a href="#" onclick="opendialog2(${offer.user.id})">${offer.user.name}</a>&nbsp;(${offer.user.stars})</br>
+                                <b>Hinta: </b>${offer.price}<br>
+                                <b>Teksti: </b>${offer.description}
+                            </p>
                             <div class="smallbuttons" align="left">	
                                     <button class="smallbutton" onclick="location.href='acceptOffer/${offer.id}'">Hyväksy</button>
                             </div>
@@ -97,7 +99,14 @@
 			<button class="smallbutton" onclick="javascript:saveAnswer();">Vastaa</button>
                         <button class="smallbutton" onclick="javascript:$( '#dialog' ).dialog('close');">Sulje</button>
 		</div>
-	</div>    
+	</div>
+        <div id="dialog2" title="Arviot">
+                <input type="hidden" id="r_dialog_id" value="" />
+                <div id="reviews" align="left"></div>
+		<div class="smallbuttons">
+                        <button class="smallbutton" onclick="javascript:$( '#dialog2' ).dialog('close');">Sulje</button>
+		</div>
+	</div>          
         <script>
             $(function() {
                     $( "button", ".mainbuttons, .omatbuttons, .smallbuttons" ).button();				
@@ -118,7 +127,7 @@
                             autoOpen: false
                     });
                     $( "#dialog2" ).dialog({
-                            height: 200,
+                            height: 400,
                             width: 400,
                             modal: true, 
                             autoOpen: false
@@ -137,8 +146,9 @@
                     document.getElementById('a_text').value = answer;
                     $( "#dialog" ).dialog('open');
             }
-            function opendialog2(jobId) {
-                    document.getElementById('q_job').value = jobId;
+            function opendialog2(userId) {
+                    document.getElementById('r_dialog_id').value = userId;
+                    getUserReviews(userId);
                     $( "#dialog2" ).dialog('open');
             }
             function confirmation(questionId) {

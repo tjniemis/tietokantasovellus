@@ -34,12 +34,12 @@
 		<input type="radio" id="radio12" name="radio" onclick="location.href='personalJobs'"/><label for="radio12">Aktiiviset ilmoitukset</label>
 		<input type="radio" id="radio13" name="radio" checked="checked" onclick="location.href='jobHistory'"/><label for="radio13">Työhistoria</label>
 		<input type="radio" id="radio14" name="radio" onclick="location.href='personalHistory'"/><label for="radio14">Ilmoitushistoria</label>
-		<input type="radio" id="radio15" name="radio" onclick="location.href='offerHistory'"/><label for="radio15">Tarjoushistoria</label>
+        <input type="radio" id="radio15" name="radio" onclick="location.href='offerHistory'"/><label for="radio15">Tarjoushistoria</label>
 		
 	</div>
 	<br><br>
         <c:if test="${empty jobs}">
-                <i>Ei työhistoriaa</i>
+                <i>Sinulla ei ole vanhoja töitä.</i>
         </c:if>
 	<div id="accordion" class="acc">            
             <c:forEach items="${jobs}" var="job" varStatus="status">
