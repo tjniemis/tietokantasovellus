@@ -2,12 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>TyölleTekijä!</title>
-		<link type="text/css" href="resources/css/main.css" rel="stylesheet" />
-		<link type="text/css" href="resources/jquery-start/css/start/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
-		<script type="text/javascript" src="resources/jquery-start/js/jquery-1.8.0.min.js"></script>
-		<script type="text/javascript" src="resources/jquery-start/js/jquery-ui-1.8.23.custom.min.js"></script>
+		<jsp:include page="includes.jsp"/>
 		<script>
 			$(function() {
 				$( "button", ".smallbuttons" ).button();	

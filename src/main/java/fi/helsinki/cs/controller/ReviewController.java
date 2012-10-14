@@ -60,11 +60,11 @@ public class ReviewController {
         
         @RequestMapping(value = "/getReviews/{userId}", method = { RequestMethod.GET, RequestMethod.POST })
         public @ResponseBody Map getReviews(@PathVariable Long userId) {
-            //User user = userDao.find(userId);
-            //System.out.println("user: "+user);
             Map map = new HashMap();
             List<Review> reviews = reviewDao.getReviewsByUser(userId);
             map.put("reviews", reviews);
+            User user = userDao.find(userId);
+            map.put("user", user);
             return map;
         }
 

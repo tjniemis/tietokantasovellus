@@ -2,12 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>TyölleTekijä!</title>
-		<link type="text/css" href="resources/css/main.css" rel="stylesheet" />
-		<link type="text/css" href="resources/jquery-start/css/start/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
-		<script type="text/javascript" src="resources/jquery-start/js/jquery-1.8.0.min.js"></script>
-		<script type="text/javascript" src="resources/jquery-start/js/jquery-ui-1.8.23.custom.min.js"></script>
+		<jsp:include page="includes.jsp"/>
                 <script type="text/javascript" src="resources/js/tsoha.js"></script>
 	</head>
 	<body style="text-align:center;">
@@ -18,7 +13,9 @@
             <div id="radio2" class="mainbuttons">
                     <input type="radio" id="radio11" name="radio2" onclick="location.href='createJob'"/><label for="radio11">Ilmoita työ</label>
                     <input type="radio" id="radio22" checked="checked" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
-                    <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tiedot</label>
+                    <input type="radio" id="radio44" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset</label>
+                    <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset</label>                    
+                    <input type="radio" id="radio55" name="radio2" onclick="location.href='jobHistory'"/><label for="radio55">Historiatiedot</label>
             </div>
         </c:if>
         <br>

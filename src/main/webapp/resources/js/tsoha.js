@@ -16,7 +16,7 @@ function saveOffer(formId) {
         dataType: "json",
         data: json,
         success: function(data){
-	    document.getElementById('offer_'+formId).innerHTML = '<i>Olet jo jättänyt työlle tarjouksen. Voit tarkastella tarjoustasi ja halutessasi poistaa sen Omat tiedot-osiosta.</i>';
+	    document.getElementById('offer_'+formId).innerHTML = '<i>Olet jo jï¿½ttï¿½nyt tyï¿½lle tarjouksen. Voit tarkastella tarjoustasi ja halutessasi poistaa sen Omat tiedot-osiosta.</i>';
             $(function() {
                     $( "#offerdialog" ).dialog('open');
             });
@@ -46,7 +46,7 @@ function saveQuestion() {
 		var divid = "q_"+q_job;
 		var ul_div = document.getElementById(divid).innerHTML;
 		var new_content = '<li class="jobtext"><b class="jobtext">Kysymys:&nbsp;</b>'+data.question+'</li>';
-		new_content += '<li class="jobtext"><b class="jobtext">Vastaus:&nbsp;</b><i>Työn tilaaja ei ole vielä vastannut kysymykseen.</i></li><hr>';    
+		new_content += '<li class="jobtext"><b class="jobtext">Vastaus:&nbsp;</b><i>Tyï¿½n tilaaja ei ole vielï¿½ vastannut kysymykseen.</i></li><hr>';    
 		document.getElementById('q_'+q_job).innerHTML = new_content+ul_div;
 		$(function() {
 		    $( "#dialog2" ).dialog('close');
@@ -138,6 +138,7 @@ function getUserReviews(userId) {
         data: json,
         success: function(data){
 		var reviews = '<ul>';
+                document.getElementById('review_target').innerHTML = '<h3>Arviot käyttäjästä '+data.user.name+'</h3>';	
 		jQuery.each(data.reviews, function() {
 			reviews += '<li class=\"jobtext\">';
 			var stars = '';

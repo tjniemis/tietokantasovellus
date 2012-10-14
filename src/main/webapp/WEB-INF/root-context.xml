@@ -19,7 +19,6 @@
                 <security:intercept-url pattern="/personalHistory*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/offerHistory*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/createJob*" access="ROLE_USER"  />
-                <security:intercept-url pattern="/jobs*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/addJob*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/addOffer*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/acceptOffer*" access="ROLE_USER"  />

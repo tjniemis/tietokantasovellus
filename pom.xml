@@ -253,5 +253,37 @@
 			</plugin>
 
 		</plugins>
+                <resources>
+                        <resource>
+                                <filtering>true</filtering>
+                                <directory>src/main/resources</directory>
+                        </resource>
+                </resources>
+
 	</build>
+        <profiles>
+            <profile>
+                <id>local</id>
+                <activation>
+                    <activeByDefault>true</activeByDefault>
+                </activation>
+                <properties>
+                    <db.username>tero</db.username>
+                    <db.password>tero</db.password>
+                    <db.url>jdbc:postgresql://localhost:5432/tiso</db.url>
+                </properties>
+            </profile>
+            <profile>
+                <id>tkt</id>
+                <activation>
+                    <activeByDefault>false</activeByDefault>
+                </activation>
+                <properties>
+                    <db.username>tjniemis</db.username>
+                    <db.password>7054665d9f843c1a</db.password>
+                    <db.url>jdbc:postgresql://localhost/tjniemis</db.url>
+                </properties>
+            </profile>
+        </profiles>
+
 </project>
