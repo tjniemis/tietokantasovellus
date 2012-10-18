@@ -72,7 +72,7 @@ public class OfferDaoTest {
         Offer offer = new Offer();
         offer.setDescription("Testi kuvaus 1");
         offer.setPrice(new Double(100));
-        Job job = jobDao.find(new Long(1));
+        Job job = jobDao.getActiveJobs().get(0);
         offer.setJob(job);
         User user = userDao.findByEmail("bond@email.com");
         offer.setUser(user);

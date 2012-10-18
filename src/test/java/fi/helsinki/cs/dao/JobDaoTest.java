@@ -5,10 +5,13 @@
 package fi.helsinki.cs.dao;
 
 import fi.helsinki.cs.model.Job;
+import fi.helsinki.cs.model.Offer;
+import fi.helsinki.cs.model.Question;
 import fi.helsinki.cs.model.Review;
 import fi.helsinki.cs.model.User;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.runner.RunWith;
@@ -36,6 +39,11 @@ public class JobDaoTest {
     @Autowired
     private ReviewDao reviewDao;
     
+    @Autowired
+    private OfferDao offerDao;
+    
+    @Autowired
+    private QuestionDao questionDao;
     /**
      * Test of save method, of class JobDao.
      */
@@ -56,6 +64,45 @@ public class JobDaoTest {
         assertEquals(job.getTitle(), result.getTitle());
         assertEquals(result.getUser().getName(), user.getName());
 
+    }
+    
+    @Test
+    public void testSaveAndDelete() {
+        System.out.println("save Job");
+        List<User> list = userDao.getUsers();
+        System.out.println("userlist.size(): "+list.size());
+        User user = list.get(0);
+        User user2 = list.get(1);
+        Job job = new Job();
+        job.setUser(user);
+        job.setTitle("työ 1");
+        job.setStatus(0);
+        job.setDescription("työn 1 kuvaus");
+        job.setExpires(new Date());
+        Job result = jobDao.save(job);
+        
+        Offer offer = new Offer();
+        offer.setPrice(100.00);
+        offer.setJob(result);
+        offer.setUser(user2);        
+        offerDao.save(offer);
+        
+        Question question = new Question();    
+        question.setQuestion("question");
+        question.setUser(user2);
+        question.setJob(result);
+        questionDao.save(question);
+            
+        assertEquals(job.getTitle(), result.getTitle());
+        assertEquals(result.getUser().getName(), user.getName());
+        jobDao.delete(result.getId());
+    }
+    
+    @Test
+    public void testGetAvailableJobCount() {
+        User user = userDao.findByEmail("macgyver@email.com"); //Homer Simpson
+        Map map = jobDao.getCounts(user);
+        assertNotNull(map.get("available"));
     }
     
     @Test
