@@ -1,9 +1,9 @@
-button.mainbutton { width: 200px; height: 60px; font-size: 11pt; font-weight: 800; } 
+button.mainbutton { width: 235px; height: 60px; font-size: 11pt; font-weight: 600; } 
 button.currentbutton { width: 210px; height: 50px; } 
 button.headerbutton { width: 140px; height: 30px; } 
 button.smallbutton { width: 70px; height: 26px;} 
 .buttons { 
-        left: 21%;
+        left: 17%;
 	position: absolute; 
 	margin-left: -200px; 
 	width: 950px; 
@@ -33,7 +33,6 @@ button.smallbutton { width: 70px; height: 26px;}
 
 li {list-style: none;margin-top: 6px;}
 ul {margin: 0px;padding:2px;}
-body
-{
-background-image:url('../images/ep3eymvfr6ee1.jpg');
-}
+body {background-image:url('../images/ep3eymvfr6ee1.jpg');}
+.row0 {background-color: #C0C0C0;}
+.row1 {background-color: none;}

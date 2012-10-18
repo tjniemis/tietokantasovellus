@@ -13,59 +13,64 @@
 	<br>
 	<h1 style="left: 50%; position: absolute; margin-left: -150px;">TyölleTekijä!</h1>
 	<div class="buttons">
-		<table width="1000" cellpadding="5">
-		<tr>
-		<td width="200">
-                <c:if test="${user!=null}">
-                    <button class="mainbutton" onclick="location.href='createJob'">1. Ilmoita työ</button>
+		
+                <c:if test="${user==null}">
+                <table width="1000" cellpadding="5">
+		<tr>   
+                <td width="800" align="center">
+                    <button class="mainbutton" onclick="location.href='jobs'">Työilmoitukset</button>
+                </td>
+                </tr>
+                <tr>
+                <td width="800" align="center">
+                    Selaa työilmoituksia
+                </td>
+                </tr>
+                </table>
                 </c:if>
-		</td>
-                <td width="200">
-                    <button class="mainbutton" onclick="location.href='jobs'">2. Työilmoitukset</button>
-		</td>
-                <td width="200">
                 <c:if test="${user!=null}">
-                    <button class="mainbutton" onclick="location.href='personalJobs'">3. Omat ilmoitukset</button>
-                </c:if>
-		</td>
-                <td width="200">
-                <c:if test="${user!=null}">
-                    <button class="mainbutton" onclick="location.href='personalData'">4. Omat tarjoukset</button>
-                </c:if>
-		</td>
-                <td width="200">
-                <c:if test="${user!=null}">
-                    <button class="mainbutton" onclick="location.href='personalData'">5. Historiatiedot</button>
-                </c:if>
-		</td>
-		</tr>
-		<tr>
-		<td width="200" valign="top">
-                <c:if test="${user!=null}">
-                    Puuttuuko uusien keittiökoneiden asentaja? Yhdistykseltäsi verkkosivut? Ilmoita ja löydä työlle tekijä!
-                </c:if>
-		</td>
-                <td width="200" valign="top">
-		Työkalenterissa tilaa? Selaa työilmoituksia ja tarjoa!
-		</td>
-                <td width="200" valign="top">
-                <c:if test="${user!=null}">
-		Seuraa ja hyväksy aktiivisia ilmoituksia.
-                 </c:if>
-		</td>
-                <td width="200" valign="top">
-                <c:if test="${user!=null}">
-		Seuraa aktiivisia tarjouksiasi.
-                 </c:if>
-		</td>
-                <td width="200" valign="top">
-                <c:if test="${user!=null}">
-		Selaa ilmoitus- ja työhistoriaasi. Sekä arvostele töitten tekijöitä.
-                 </c:if>
-		</td>
-		</tr>
-
+                <table width="1000" cellpadding="5">
+		<tr> 
+                    <td width="200">                
+                        <button class="mainbutton" onclick="location.href='createJob'">1. Ilmoita työ</button>                
+                    </td>
+                    <td width="200">
+                        <button class="mainbutton" onclick="location.href='jobs'">2. Työilmoitukset (${count.available})</button>
+                    </td>
+                    <td width="200">
+                        <button class="mainbutton" onclick="location.href='personalJobs'">3. Omat ilmoitukset (${count.jobs})</button>
+                    </td>
+                    <td width="200">
+                        <button class="mainbutton" onclick="location.href='personalData'">4. Omat tarjoukset (${count.offers})</button>
+                    </td>
+                    <td width="200">
+                        <button class="mainbutton" onclick="location.href='personalData'">5. Historiatiedot</button>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td width="200" valign="top">                
+                        Puuttuuko uusien keittiökoneiden asentaja? Yhdistykseltäsi verkkosivut? Ilmoita ja löydä työlle tekijä!
+                    </td>
+                    <td width="200" valign="top">
+                        Työkalenterissa tilaa? Selaa työilmoituksia ja tarjoa!
+                    </td>
+                    <td width="200" valign="top">
+                        Seuraa ja hyväksy aktiivisia ilmoituksia.
+                    </td>
+                    <td width="200" valign="top">
+                        Seuraa aktiivisia tarjouksiasi.
+                    </td>
+                    <td width="200" valign="top">
+                        Selaa ilmoitus- ja työhistoriaasi. Sekä arvostele töitten tekijöitä.
+                    </td>
+                    </tr>
 		</table>
+                </c:if>
+		
+		<tr>
+                <c:if test="${user==null}">
+                
+                </c:if>
 	</div>
 	</body>
 </html>

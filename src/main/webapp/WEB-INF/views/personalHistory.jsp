@@ -22,9 +22,9 @@
 	<h1 class="header">TyölleTekijä!</h1>
 	<div id="radio2" class="mainbuttons">
 		<input type="radio" id="radio11" name="radio2" onclick="location.href='createJob'"/><label for="radio11">Ilmoita työ</label>
-                <input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
-                <input type="radio" id="radio44" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset</label>
-                <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset</label>                    
+                <input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset(${count.available})</label>
+                <input type="radio" id="radio44" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset(${count.jobs})</label>
+                <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset(${count.offers})</label>                    
                 <input type="radio" id="radio55" checked="checked" name="radio2" onclick="location.href='jobHistory'"/><label for="radio55">Historiatiedot</label>
 	</div>
         
@@ -71,7 +71,7 @@
                 
                 <input type="radio" id="radio_r_1" name="r_rating" value="1"/><label for="radio_r_1">&#9734;</label>
                 <input type="radio" id="radio_r_2" name="r_rating" value="2"/><label for="radio_r_2">&#9734;&#9734;</label>
-                <input type="radio" id="radio_r_3" name="r_rating" value="3"/><label for="radio_r_3">&#9734;&#9734;&#9734;</label>
+                <input type="radio" id="radio_r_3" name="r_rating" checked value="3"/><label for="radio_r_3">&#9734;&#9734;&#9734;</label>
                 <input type="radio" id="radio_r_4" name="r_rating" value="4"/><label for="radio_r_4">&#9734;&#9734;&#9734;&#9734;</label>
                 <input type="radio" id="radio_r_5" name="r_rating" value="5"/><label for="radio_r_5">&#9734;&#9734;&#9734;&#9734;&#9734;</label>
             </div>

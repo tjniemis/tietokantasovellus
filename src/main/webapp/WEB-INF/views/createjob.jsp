@@ -17,9 +17,9 @@
 	<h1 class="header">TyölleTekijä!</h1>
 	<div id="radio2" class="mainbuttons">
 		<input type="radio" id="radio11" checked="checked" name="radio2" onclick="location.href='createJob'"/><label for="radio11">Ilmoita työ</label>
-                <input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
-                <input type="radio" id="radio44" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset</label>
-                <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset</label>                    
+                <input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset(${count.available})</label>
+                <input type="radio" id="radio44" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset(${count.jobs})</label>
+                <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset(${count.offers})</label>                    
                 <input type="radio" id="radio55" name="radio2" onclick="location.href='jobHistory'"/><label for="radio55">Historiatiedot</label>
 	</div>
 	<br><br>

@@ -11,9 +11,9 @@
 	<h1 class="header">TyölleTekijä!</h1>
 	<div id="radio2" class="mainbuttons">
             <input type="radio" id="radio11" name="radio2" onclick="location.href='createJob'"/><label for="radio11">Ilmoita työ</label>
-            <input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset</label>
-            <input type="radio" id="radio44" checked="checked" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset</label>
-            <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset</label>                    
+            <input type="radio" id="radio22" name="radio2" onclick="location.href='jobs'"/><label for="radio22">Työilmoitukset(${count.available})</label>
+            <input type="radio" id="radio44" checked="checked" name="radio2" onclick="location.href='personalJobs'"/><label for="radio44">Omat ilmoitukset(${count.jobs})</label>
+            <input type="radio" id="radio33" name="radio2" onclick="location.href='personalData'"/><label for="radio33">Omat tarjoukset(${count.offers})</label>                    
             <input type="radio" id="radio55" name="radio2" onclick="location.href='jobHistory'"/><label for="radio55">Historiatiedot</label>
 	</div>
 	<br><br>
@@ -30,6 +30,9 @@
                         <b>Työn kuvaus:</b><br>${job.description}<br><br>
                         <b>Tarjousten viim.jättöpvm:</b><br><fmt:formatDate pattern="dd.MM.yyyy" value="${job.expires}" /><br><br>
                     </li>
+                    <div class="omatbuttons" align="left" style="margin-top: 0px; padding-top: 0px;">	
+                        <button class="omatbuttons" onclick="confirmationJob(${job.id})">Poista työ</button><br><br>
+                    </div>
                 </ul>       
                 
                 <div id="tabs-${status.index}">
@@ -145,7 +148,13 @@
             function confirmation(questionId) {
                 var answer = confirm("Olet poistamassa kysymyksen ja sen vastauksen. Oletko varma?")
                 if (answer){
-                        deleteQuestion(questionId);
+                    deleteQuestion(questionId);
+                }
+            }
+            function confirmationJob(jobId) {
+                var answer = confirm("Olet poistamassa ilmoittamasi työn. Oletko varma?")
+                if (answer){
+                    location.href='deleteJob/'+jobId;
                 }
             }
         </script>

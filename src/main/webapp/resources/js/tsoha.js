@@ -5,10 +5,13 @@
 
 
 function saveOffer(formId) { 
-    //alert(formId);
     var form = document.getElementById(formId);
     var price = form.price.value;
     var desc = form.pricetext.value;
+    if (price==null || price == "") {
+	alert('Hinta on pakollinen');
+	return;	
+    }
     var json = '{"price": "'+price+'", "description" : "'+desc+'"}';
     //alert(json);
     $.ajax({
@@ -16,10 +19,11 @@ function saveOffer(formId) {
         dataType: "json",
         data: json,
         success: function(data){
-	    document.getElementById('offer_'+formId).innerHTML = '<i>Olet jo jï¿½ttï¿½nyt tyï¿½lle tarjouksen. Voit tarkastella tarjoustasi ja halutessasi poistaa sen Omat tiedot-osiosta.</i>';
-            $(function() {
+	    //document.getElementById('offer_'+formId).innerHTML = '<br><i>Olet jo jättänyt työlle tarjouksen. Voit tarkastella tarjoustasi ja halutessasi poistaa sen Omat tiedot-osiosta.</i>';
+	    $(function() {
                     $( "#offerdialog" ).dialog('open');
             });
+
         },
         error: function (xhr, ajaxOptions, thrownError, data) {
         	alert(data.root);
@@ -31,13 +35,17 @@ function saveOffer(formId) {
 
 function closeDialog(div) {
     $(div).dialog('close');
+    location.href = 'personalData';
 }
 
 function saveQuestion() {
     var q_job = document.getElementById('q_job').value;
     var q_text = document.getElementById('q_text').value;
+    if (q_text==null || q_text == "") {
+	alert('Teksti on pakollinen');
+	return;	
+    }
     var json = '{"question": "'+q_text+'"}';
-    //alert(json);
     $.ajax({
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -46,7 +54,7 @@ function saveQuestion() {
 		var divid = "q_"+q_job;
 		var ul_div = document.getElementById(divid).innerHTML;
 		var new_content = '<li class="jobtext"><b class="jobtext">Kysymys:&nbsp;</b>'+data.question+'</li>';
-		new_content += '<li class="jobtext"><b class="jobtext">Vastaus:&nbsp;</b><i>Tyï¿½n tilaaja ei ole vielï¿½ vastannut kysymykseen.</i></li><hr>';    
+		new_content += '<li class="jobtext"><b class="jobtext">Vastaus:&nbsp;</b><i>Työn tilaaja ei ole vielä vastannut kysymykseen.</i></li><hr>';    
 		document.getElementById('q_'+q_job).innerHTML = new_content+ul_div;
 		$(function() {
 		    $( "#dialog2" ).dialog('close');
@@ -64,6 +72,10 @@ function saveQuestion() {
 function saveAnswer() {
     var q_dialog_id = document.getElementById('q_dialog_id').value;
     var a_text = document.getElementById('a_text').value;
+    if (a_text==null || a_text == "") {
+	alert('Teksti on pakollinen');
+	return;	
+    }
     var json = '{"answer": "'+a_text+'"}';
     //alert(json);
     $.ajax({
@@ -109,7 +121,6 @@ function reviewJob() {
     var r_text = document.getElementById('r_text').value;
     var r_rating = $("input:radio[name=r_rating]:checked").val();
     var json = '{"rating": "'+r_rating+'", "review" : "'+r_text+'"}';
-    //alert(json);
     $.ajax({
         contentType: "application/json; charset=utf-8",
         dataType: "json",
