@@ -26,10 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ReviewController {
 
-        @InitBinder
-        protected void initBinder(WebDataBinder binder) {
-        }
-        
 	@Autowired
 	private UserDao userDao;
         
@@ -43,11 +39,6 @@ public class ReviewController {
         @RequestMapping(value = "/reviewUser/{userId}/{jobId}", method = { RequestMethod.GET, RequestMethod.POST })
         public @ResponseBody String reviewUser(@RequestBody Review review, @PathVariable Long userId, @PathVariable Long jobId, Principal principal) {
             Map results = new HashMap();
-            if (principal==null) {
-                results.put("exception", "No user logged in");
-                results.put("success", "0");
-                return "";
-            }
             User reviewer = userDao.findByEmail(principal.getName());
             User user = userDao.find(userId);
             Job job = jobDao.find(jobId);

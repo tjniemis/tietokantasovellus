@@ -4,7 +4,6 @@
  */
 package fi.helsinki.cs.util;
 
-import fi.helsinki.cs.dao.JobDao;
 import fi.helsinki.cs.dao.OfferDao;
 import fi.helsinki.cs.model.Job;
 import fi.helsinki.cs.model.Offer;
@@ -16,7 +15,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Service class which could be used to send out emails. Class is just a demonstration of how it works. 
+ * Currently mail sending is switched off because sample users email addresses are bogus ones. 
+ * 
  * @author tesuomin
  */
 @Service
@@ -32,8 +33,15 @@ public class MailService {
         private static final String lostOfferText = "Kiitos tarjouksesta, mutta valitettavasti tilaaja ei päätynyt tarjoukseesi. Onnea jatkossa!";
         
         private static final String winOfferSubject = "Onnittelut, voitit tarjouskilpailun!";
-        private static final String winOfferText = "Onneksi olkoon! Tarjouksesi vakuutti minnt ja olet voittanut tarjouskilpailuni.";
+        private static final String winOfferText = "Onneksi olkoon! Tarjouksesi vakuutti minut ja olet voittanut tarjouskilpailuni.";
         
+        /**
+         * When offer is accepted, this method constructs mail messages to all participants. Winner gets different email than losers. 
+         * 
+         * @param user User who accepted offer
+         * @param job Job in question
+         * @param winningOfferId Winning offer ID
+         */
         public void acceptOfferMails(User user, Job job, Long winningOfferId) {
             //TODO: Send proper emails to all participants
             List<Offer> offers = offerDao.getOffersByJob(job);
@@ -51,7 +59,8 @@ public class MailService {
             }
         }    
         
-	public void sendMail(String from, String to, String subject, String msg) {
+        //Private method for mail sending
+	private void sendMail(String from, String to, String subject, String msg) {
  
 		SimpleMailMessage message = new SimpleMailMessage();
  

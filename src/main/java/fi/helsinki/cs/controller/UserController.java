@@ -19,9 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class UserController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
+    
         @InitBinder
         protected void initBinder(WebDataBinder binder) {
             binder.setValidator(new UserValidator());

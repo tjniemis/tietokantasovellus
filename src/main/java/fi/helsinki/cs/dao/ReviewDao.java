@@ -5,7 +5,6 @@
 package fi.helsinki.cs.dao;
 
 import fi.helsinki.cs.model.Review;
-import fi.helsinki.cs.model.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,27 +20,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class ReviewDao {
     
-    @Autowired
-    private UserDao userDao;
-    
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+    * Finds Review by it's ID
+    * 
+    * @param id ID of the Review 
+    * @return Review if it was found, otherwise null
+    */
     @Transactional(readOnly=true)
     public Review find(Long id) {
         return entityManager.find(Review.class, id);
     }
     
+    /**
+     * Deletes single review from database
+     * 
+     * @param id ID of the Review which is to be deleted
+     * @return True if all went well
+     */
     @Transactional
     public Boolean delete(Long id) {
         entityManager.createNativeQuery("delete from Review where id="+id).executeUpdate();
         return new Boolean(true);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Transactional(readOnly=true)
-    public List<Review> getReviews() {
-            return entityManager.createQuery("select r from Review r").getResultList();
     }
     
     /**
@@ -81,6 +83,12 @@ public class ReviewDao {
         return new Integer(0);
     }
 
+    /**
+     * Stores Review to database
+     * 
+     * @param review Review to be stored
+     * @return Review which was stored
+     */
     @Transactional
     public Review save(Review review) {
         return entityManager.merge(review);

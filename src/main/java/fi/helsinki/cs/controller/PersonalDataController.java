@@ -34,9 +34,7 @@ public class PersonalDataController {
         public String personalData(Model model, Principal principal) {
             System.out.println("personalData");       
             User user = null;
-            if (principal!=null) {
-                user = userDao.findByEmail(principal.getName());                
-            }
+            user = userDao.findByEmail(principal.getName());            
             List<Offer> offers = offerDao.getActiveOffersByUser(user);
             for (Offer offer : offers) {
                 Job job = jobDao.find(offer.getJob().getId());
@@ -44,6 +42,7 @@ public class PersonalDataController {
             }
             model.addAttribute("user", user); 
             model.addAttribute("offers", offers);
+            model.addAttribute("count", jobDao.getCounts(user));
             return "personal";
 	}
         
@@ -51,9 +50,7 @@ public class PersonalDataController {
         public String personalJobs(Model model, Principal principal) {
             System.out.println("personalJobs");       
             User user = null;
-            if (principal!=null) {
-                user = userDao.findByEmail(principal.getName());                
-            }
+            user = userDao.findByEmail(principal.getName());                
             List<Job> jobs = jobDao.getActiveJobsByUser(user);
             //TODO: Lisää arviot
             for (Job job : jobs) {
@@ -66,6 +63,7 @@ public class PersonalDataController {
             }
             model.addAttribute("user", user); 
             model.addAttribute("jobs", jobs);
+            model.addAttribute("count", jobDao.getCounts(user));
             return "personalJobs";
 	}
         
@@ -73,12 +71,11 @@ public class PersonalDataController {
         public String jobHistory(Model model, Principal principal) {
             System.out.println("jobHistory");       
             User user = null;
-            if (principal!=null) {
-                user = userDao.findByEmail(principal.getName());                
-            }
+            user = userDao.findByEmail(principal.getName());
             List<Job> jobs = jobDao.getJobHistoryByUser(user);
             model.addAttribute("user", user); 
             model.addAttribute("jobs", jobs);
+            model.addAttribute("count", jobDao.getCounts(user));
             return "jobHistory";
 	}
         
@@ -86,9 +83,7 @@ public class PersonalDataController {
         public String personalHistory(Model model, Principal principal) {
             System.out.println("personalHistory");       
             User user = null;
-            if (principal!=null) {
-                user = userDao.findByEmail(principal.getName());                
-            }
+            user = userDao.findByEmail(principal.getName());               
             List<Job> jobs = jobDao.getJobsByUser(user);
             for (Job job : jobs) {
                 Offer offer = offerDao.find(job.getWinningOffer().getId()); //User mukana
@@ -96,6 +91,7 @@ public class PersonalDataController {
             }
             model.addAttribute("user", user); 
             model.addAttribute("jobs", jobs);
+            model.addAttribute("count", jobDao.getCounts(user));
             return "personalHistory";
 	}
         
@@ -103,13 +99,12 @@ public class PersonalDataController {
         public String offerHistory(Model model, Principal principal) {
             System.out.println("offerHistory");       
             User user = null;
-            if (principal!=null) {
-                user = userDao.findByEmail(principal.getName());                
-            }
+            user = userDao.findByEmail(principal.getName());
             List<Offer> offers = offerDao.getOffersByUser(user);
 
             model.addAttribute("user", user); 
             model.addAttribute("offers", offers);
+            model.addAttribute("count", jobDao.getCounts(user));
             return "offerHistory";
 	}
 

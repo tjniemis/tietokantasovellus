@@ -4,26 +4,29 @@
  */
 package fi.helsinki.cs.validator;
 
-import fi.helsinki.cs.model.Job;
-import fi.helsinki.cs.model.User;
+import fi.helsinki.cs.model.Review;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- *
+ * Validator class for validating Reviews 
+ * 
  * @author tesuomin
  */
-public class JobValidator implements Validator {
-/**
-    * This Validator validates just Job instances
+public class ReviewValidator implements Validator {
+    
+    /**
+    * This Validator validates just Review instances
     */
     public boolean supports(Class clazz) {
-        return Job.class.equals(clazz);
+        return Review.class.equals(clazz);
     }
 
+    /**
+     * Validates Review. Only validation error comes if rating is left empty.
+     */
     public void validate(Object obj, Errors e) {
-        ValidationUtils.rejectIfEmpty(e, "title", "title.empty");
-        ValidationUtils.rejectIfEmpty(e, "description", "description.empty");
+        ValidationUtils.rejectIfEmpty(e, "rating", "rating.empty");
     }
 }

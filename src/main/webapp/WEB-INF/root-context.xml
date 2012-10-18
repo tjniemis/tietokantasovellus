@@ -13,6 +13,7 @@
 		<security:form-login login-page="/login" default-target-url="/start"
 			authentication-failure-url="/loginfailed" />
 		<security:logout logout-success-url="/logout" />
+                <security:intercept-url pattern="/admin*" access="ROLE_ADMIN"  />
                 <security:intercept-url pattern="/jobhistory*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/personalDats*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/personalJobs*" access="ROLE_USER"  />
@@ -28,6 +29,8 @@
                 <security:intercept-url pattern="/addQuestion*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/addAnswer*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/deleteQuestion*" access="ROLE_USER"  />
+                <security:intercept-url pattern="/deleteJob*" access="ROLE_USER"  />
+                <security:access-denied-handler error-page="/accessDenied"/>
 	</security:http>
         
         <security:authentication-manager>

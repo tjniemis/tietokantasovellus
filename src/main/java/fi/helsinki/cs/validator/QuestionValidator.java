@@ -4,26 +4,29 @@
  */
 package fi.helsinki.cs.validator;
 
-import fi.helsinki.cs.model.Job;
-import fi.helsinki.cs.model.User;
+import fi.helsinki.cs.model.Question;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- *
+ * Validator class for validating Questions 
+ * 
  * @author tesuomin
  */
-public class JobValidator implements Validator {
-/**
-    * This Validator validates just Job instances
+public class QuestionValidator implements Validator {
+    
+    /**
+    * This Validator validates just Question instances
     */
     public boolean supports(Class clazz) {
-        return Job.class.equals(clazz);
+        return Question.class.equals(clazz);
     }
 
+    /**
+     * Validates Question. Only validation error comes if question is left empty.
+     */
     public void validate(Object obj, Errors e) {
-        ValidationUtils.rejectIfEmpty(e, "title", "title.empty");
-        ValidationUtils.rejectIfEmpty(e, "description", "description.empty");
+        ValidationUtils.rejectIfEmpty(e, "question", "question.empty");
     }
 }

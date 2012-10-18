@@ -10,11 +10,8 @@ import fi.helsinki.cs.model.User;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,13 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class QuestionController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
-
-        @InitBinder
-        protected void initBinder(WebDataBinder binder) {
-        }
-        
+    
 	@Autowired
 	private UserDao userDao;
         
@@ -46,11 +37,6 @@ public class QuestionController {
             System.out.println("addQuestion");
 
             Map results = new HashMap();
-            if (principal==null) {
-                results.put("exception", "No user logged in");
-                results.put("success", "0");
-                return results;
-            }
             User user = userDao.findByEmail(principal.getName());
             Job job = jobDao.find(jobId);
             question.setJob(job);
@@ -63,15 +49,10 @@ public class QuestionController {
         }
         
         @RequestMapping(value = "/addAnswer/{questionId}", method = RequestMethod.POST, produces="application/json") 
-        public @ResponseBody Map addAnswer(@RequestBody Question question, Principal principal, @PathVariable Long questionId) {
+        public @ResponseBody Map addAnswer(@RequestBody Question question, @PathVariable Long questionId) {
             System.out.println("addQuestion");
 
             Map results = new HashMap();
-            if (principal==null) {
-                results.put("exception", "No user logged in");
-                results.put("success", "0");
-                return results;
-            }
             String answer = question.getAnswer();
             Question question2 = questionDao.find(questionId);
             question2.setAnswer(answer);
@@ -86,16 +67,9 @@ public class QuestionController {
         }
         
         @RequestMapping(value = "/deleteQuestion/{questionId}", method = RequestMethod.POST, produces="application/json") 
-        public @ResponseBody Map deleteQuestion(Principal principal, @PathVariable Long questionId) {
+        public @ResponseBody Map deleteQuestion(@PathVariable Long questionId) {
             System.out.println("deleteQuestion");
-
             Map results = new HashMap();
-            if (principal==null) {
-                results.put("success", "0");
-                results.put("exception", "no user");
-                return results;
-            }
-            User user = userDao.findByEmail(principal.getName());
             questionDao.delete(questionId);
             results.put("success", "1");
             return results;

@@ -1,5 +1,6 @@
 package fi.helsinki.cs.controller;
 
+import fi.helsinki.cs.dao.JobDao;
 import fi.helsinki.cs.dao.UserDao;
 import fi.helsinki.cs.model.User;
 import java.security.Principal;
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Sample controller for going to the home page with a message
  */
 @Controller
-public class HomeController {
+public class LoginController {
 
         @Autowired
 	private UserDao userDao;
+        
+        @Autowired
+	private JobDao jobDao;
         
 	/**
 	 * Selects the home page and populates the model with a message
@@ -42,19 +46,22 @@ public class HomeController {
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model) {
  		return "login";
- 
 	}
         
         @RequestMapping(value="/start", method = RequestMethod.GET)
 	public String startPage(Model model, Principal principal) {
-                if (principal==null) {
-                    System.out.println("Principal is Null");
-                } else {
+                if (principal!=null ) {
                     System.out.println("Principal.name: "+principal.getName());
                     User user = userDao.findByEmail(principal.getName());
-                    model.addAttribute("user", user);                    
+                    model.addAttribute("user", user); 
+                    model.addAttribute("count", jobDao.getCounts(user));
+                    if (user.getRole().equals("ROLE_USER")) {
+                        model.addAttribute("count", jobDao.getCounts(user));
+                    } else if (user.getRole().equals("ROLE_ADMIN")) {
+                        return "redirect:admin";
+                    }
                 }
-		return "start";
+                return "start";		
 	}
 
 }

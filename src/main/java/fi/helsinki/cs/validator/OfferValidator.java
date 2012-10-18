@@ -4,26 +4,29 @@
  */
 package fi.helsinki.cs.validator;
 
-import fi.helsinki.cs.model.Job;
-import fi.helsinki.cs.model.User;
+import fi.helsinki.cs.model.Offer;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- *
+ * Validator class for validating Offers 
+ * 
  * @author tesuomin
  */
-public class JobValidator implements Validator {
-/**
-    * This Validator validates just Job instances
+public class OfferValidator implements Validator {
+    
+    /**
+    * This Validator validates just Offer instances
     */
     public boolean supports(Class clazz) {
-        return Job.class.equals(clazz);
+        return Offer.class.equals(clazz);
     }
 
+    /**
+     * Validates Offer. Only validation error comes if price is left empty.
+     */
     public void validate(Object obj, Errors e) {
-        ValidationUtils.rejectIfEmpty(e, "title", "title.empty");
-        ValidationUtils.rejectIfEmpty(e, "description", "description.empty");
+        ValidationUtils.rejectIfEmpty(e, "price", "price.empty");
     }
 }

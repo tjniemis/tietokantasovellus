@@ -135,4 +135,18 @@ public class User extends PersistentObject {
         this.average_rating = average_rating;
     }
 
+    /**
+     * @return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }

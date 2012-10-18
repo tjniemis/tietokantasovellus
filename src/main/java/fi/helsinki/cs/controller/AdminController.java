@@ -1,12 +1,15 @@
 package fi.helsinki.cs.controller;
 
+import fi.helsinki.cs.dao.JobDao;
 import fi.helsinki.cs.dao.UserDao;
+import fi.helsinki.cs.model.Job;
 import fi.helsinki.cs.model.User;
 import java.security.Principal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,47 +17,35 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Sample controller for going to the home page with a message
  */
 @Controller
-public class HomeController {
+public class AdminController {
 
         @Autowired
 	private UserDao userDao;
         
-	/**
-	 * Selects the home page and populates the model with a message
-	 */
-	@RequestMapping(value="/", method = RequestMethod.GET)
-	public String home(Model model, Principal principal) {
-                return startPage(model, principal);
+        @Autowired
+	private JobDao jobDao;
+        
+        
+        @RequestMapping(value="/admin", method = RequestMethod.GET)
+	public String admin(ModelMap model, Principal principal) {
+                System.out.println("AdminController");
+                User user = userDao.findByEmail(principal.getName());        
+                List<Job> jobs = jobDao.getJobs();
+                model.addAttribute("jobs", jobs);
+                model.addAttribute("user", user);
+		return "admin";
 	}
         
-        @RequestMapping(value="/login", method = RequestMethod.GET)
-	public String login(ModelMap model) {
-		return "login";
+        @RequestMapping(value="/accessDenied", method = RequestMethod.GET)
+	public String accessDenied(ModelMap model) {
+		return "accessDenied";
 	}
         
-	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
-	public String loginerror(ModelMap model) {
- 		model.addAttribute("error", "true");
-		return "login";
- 
-	}
-	
-	@RequestMapping(value="/logout", method = RequestMethod.GET)
-	public String logout(ModelMap model) {
- 		return "login";
- 
-	}
-        
-        @RequestMapping(value="/start", method = RequestMethod.GET)
-	public String startPage(Model model, Principal principal) {
-                if (principal==null) {
-                    System.out.println("Principal is Null");
-                } else {
-                    System.out.println("Principal.name: "+principal.getName());
-                    User user = userDao.findByEmail(principal.getName());
-                    model.addAttribute("user", user);                    
-                }
-		return "start";
-	}
+        @RequestMapping(value = "/deleteJobAdmin/{jobId}", method = RequestMethod.GET) 
+        public String deleteJob(@PathVariable Long jobId) {
+            System.out.println("deleteJobAdmin");
+            jobDao.delete(jobId);
+            return "redirect:../admin";
+        }
 
 }

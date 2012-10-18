@@ -10,7 +10,8 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- *
+ * Validate class for Users
+ * 
  * @author tesuomin
  */
 public class UserValidator implements Validator {
@@ -21,7 +22,11 @@ public class UserValidator implements Validator {
     public boolean supports(Class clazz) {
         return User.class.equals(clazz);
     }
-
+    
+    /**
+     * Validates User instance. Rejects instance if name, email or password are empty. 
+     * Also rejects if password confirmation does not match password. 
+     */
     public void validate(Object obj, Errors e) {
         ValidationUtils.rejectIfEmpty(e, "name", "name.empty");
         ValidationUtils.rejectIfEmpty(e, "email", "email.empty");

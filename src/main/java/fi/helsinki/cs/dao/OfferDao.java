@@ -24,31 +24,27 @@ public class OfferDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * Finds single Offer by it's ID
+     * 
+     * @param id
+     * @return found Offer or null if nothing was found
+     */
     @Transactional(readOnly=true)
     public Offer find(Long id) {
             return entityManager.find(Offer.class, id);
     }
     
+    /**
+     * Removes offer from database
+     * 
+     * @param id ID of the offer to be removed
+     * @return True if all went well.
+     */
     @Transactional
     public Boolean remove(Long id) {
-            //Offer offer = entityManager.find(Offer.class, id);
-            //System.out.println("offer.id: "+offer.getId());
-            //offer.setJob(null);
-            //offer.setUser(null);
-            //offer = entityManager.merge(offer);
             entityManager.createNativeQuery("delete from Offer where id="+id).executeUpdate();
             return new Boolean(true);
-    }
-
-    /**
-     * Kaikki tarjoukset
-     * 
-     * @return 
-     */
-    @SuppressWarnings("unchecked")
-    @Transactional(readOnly=true)
-    public List<Offer> getOffers() {
-            return entityManager.createQuery("select j from Offer j").getResultList();
     }
 
     /**
@@ -66,10 +62,10 @@ public class OfferDao {
     }
     
     /**
-     * Kaikki työn tarjoukset
+     * All offers made on one Job
      * 
-     * @param job
-     * @return 
+     * @param job Job in question
+     * @return List<Offer> of all offers made to this Job
      */
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
@@ -80,10 +76,10 @@ public class OfferDao {
     }
     
     /**
-     * Aktiiviset tarjoukset
+     * Finds all active offers made by single User
      * 
-     * @param user
-     * @return 
+     * @param user User who's offers are searched
+     * @return List<Offer> of all active offers by this User
      */
     @SuppressWarnings("unchecked")
     @Transactional(readOnly=true)
@@ -93,6 +89,12 @@ public class OfferDao {
             return query.getResultList();
     }
 
+    /**
+     * Stores a single Offer into database
+     * 
+     * @param offer Offer to be stored
+     * @return Offer which was stored
+     */
     @Transactional
     public Offer save(Offer offer) {
         return entityManager.merge(offer);
