@@ -14,6 +14,7 @@
 			authentication-failure-url="/loginfailed" />
 		<security:logout logout-success-url="/logout" />
                 <security:intercept-url pattern="/admin*" access="ROLE_ADMIN"  />
+                <security:intercept-url pattern="/deleteJobAdmin*" access="ROLE_ADMIN"  />
                 <security:intercept-url pattern="/jobhistory*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/personalDats*" access="ROLE_USER"  />
                 <security:intercept-url pattern="/personalJobs*" access="ROLE_USER"  />

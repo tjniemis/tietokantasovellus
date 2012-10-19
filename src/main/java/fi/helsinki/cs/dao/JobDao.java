@@ -133,9 +133,10 @@ public class JobDao {
         public Map getCounts(User user) {
             Map map = new HashMap();
             //First available jobs
-            Query query = entityManager.createNativeQuery("select count(*) from Job j where j.status = 0 and j.expires > :currentDate and j.id not in (select j2.id from Offer o, Job j2 where o.job_id = j2.id and o.user_id = :user and j2.status = 0)");
+            Query query = entityManager.createNativeQuery("select count(*) from Job j where j.status = 0 and j.expires > :currentDate and j.owner_id != :user2 and j.id not in (select j2.id from Offer o, Job j2 where o.job_id = j2.id and o.user_id = :user and j2.status = 0)");
             query.setParameter("currentDate", new Date());
             query.setParameter("user", user);
+            query.setParameter("user2", user);
             BigInteger integer = (BigInteger)query.getSingleResult();
             System.out.println("Available: "+integer);
             map.put("available", integer);
