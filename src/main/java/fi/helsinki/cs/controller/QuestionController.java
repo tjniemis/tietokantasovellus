@@ -1,6 +1,5 @@
 package fi.helsinki.cs.controller;
 
-
 import fi.helsinki.cs.dao.JobDao;
 import fi.helsinki.cs.dao.QuestionDao;
 import fi.helsinki.cs.dao.UserDao;
@@ -12,13 +11,17 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * Controller class for handling calls related to Questions.
+ * 
+ * @author tesuomin
+ */
 
 @Controller
 public class QuestionController {
@@ -32,6 +35,14 @@ public class QuestionController {
         @Autowired
 	private QuestionDao questionDao;
         
+        /**
+         * Adds new question to a Job.
+         * 
+         * @param question Question which is constructed from JSON in Request Body
+         * @param principal User data
+         * @param jobId ID of the Job to which this question is related to
+         * @return Returns JSON object directly to Response Body. Response JSON contains only information if save was succesful. 
+         */
         @RequestMapping(value = "/addQuestion/{jobId}", method = RequestMethod.POST, produces="application/json") 
         public @ResponseBody Map addQuestion(@RequestBody Question question, Principal principal, @PathVariable Long jobId) {
             System.out.println("addQuestion");
@@ -48,6 +59,13 @@ public class QuestionController {
             return results;
         }
         
+        /**
+         * Adds an answer to one question. 
+         * 
+         * @param question Question object constructed automatically from JSON in Request Body, contains answer. 
+         * @param questionId ID of the Question
+         * @return Returns JSON object directly to Response Body. Response JSON contains only information if save was succesful. 
+         */
         @RequestMapping(value = "/addAnswer/{questionId}", method = RequestMethod.POST, produces="application/json") 
         public @ResponseBody Map addAnswer(@RequestBody Question question, @PathVariable Long questionId) {
             System.out.println("addQuestion");
@@ -66,6 +84,12 @@ public class QuestionController {
             return results;
         }
         
+        /**
+         * Deletes one question from database. 
+         * 
+         * @param questionId ID of the question which is to be deleted.
+         * @return Returns JSON object directly to Response Body. Response JSON contains only information if save was succesful. 
+         */
         @RequestMapping(value = "/deleteQuestion/{questionId}", method = RequestMethod.POST, produces="application/json") 
         public @ResponseBody Map deleteQuestion(@PathVariable Long questionId) {
             System.out.println("deleteQuestion");

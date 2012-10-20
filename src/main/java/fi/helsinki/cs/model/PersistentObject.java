@@ -5,6 +5,9 @@
 package fi.helsinki.cs.model;
 
 import java.util.Date;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -17,6 +20,10 @@ import javax.persistence.TemporalType;
  */
 @MappedSuperclass
 public class PersistentObject {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
@@ -40,6 +47,20 @@ public class PersistentObject {
     public void updateTimeStamps() {
         if (created==null) 
             created = new Date();
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

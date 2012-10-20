@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Sample controller for going to the home page with a message
+ * Controller for login attempts, logout and also access to home page(or start page)
  */
 @Controller
 public class LoginController {
@@ -24,18 +24,30 @@ public class LoginController {
 	private JobDao jobDao;
         
 	/**
-	 * Selects the home page and populates the model with a message
+	 * Forwards call to startPage method. 
 	 */
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String home(Model model, Principal principal) {
                 return startPage(model, principal);
 	}
         
+        /**
+         * Handler for "/login" call. 
+         * 
+         * @param model
+         * @return Returns login.jsp
+         */
         @RequestMapping(value="/login", method = RequestMethod.GET)
 	public String login(ModelMap model) {
 		return "login";
 	}
         
+        /**
+         * Handler for failed login attempts. 
+         * 
+         * @param model
+         * @return Returns login.jsp
+         */
 	@RequestMapping(value="/loginfailed", method = RequestMethod.GET)
 	public String loginerror(ModelMap model) {
  		model.addAttribute("error", "true");
@@ -43,11 +55,26 @@ public class LoginController {
  
 	}
 	
+        /**
+         * Handler for "/logout" calls.
+         * 
+         * @param model
+         * @return Returns login.jsp
+         */
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(ModelMap model) {
  		return "login";
 	}
         
+        /**
+         * Handles "/start" calls. Since startpage is one of the pages which can be accessed without login, 
+         * method checks wheter user has logged in. If user exists, then user data along some other information
+         * is retrieved from database and added to page model.
+         * 
+         * @param model Model of the page
+         * @param principal User data
+         * @return Returns start.jsp
+         */
         @RequestMapping(value="/start", method = RequestMethod.GET)
 	public String startPage(Model model, Principal principal) {
                 if (principal!=null ) {

@@ -7,7 +7,7 @@
 			$(function() {
 				$( "button", ".omatbuttons" ).button();	
 				$( "#radio2" ).buttonset();		
-				$( "#datepicker" ).datepicker({ dateFormat: "dd.mm.yy" });	
+				$( "#datepicker" ).datepicker({ dateFormat: "dd.mm.yy", minDate: 0 });	
 			});
 		</script>
 	</head>

@@ -7,9 +7,6 @@ package fi.helsinki.cs.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PreRemove;
@@ -20,10 +17,6 @@ import javax.persistence.PreRemove;
  */
 @Entity
 public class Offer extends PersistentObject {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     
     @Column
     private Double price;
@@ -44,20 +37,6 @@ public class Offer extends PersistentObject {
         System.out.println("Offer.preRemove()");
         setUser(null);
         setJob(null);
-    }
-
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**

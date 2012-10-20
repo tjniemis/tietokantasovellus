@@ -42,7 +42,9 @@
                     </ul>
                     
                     <div id="tabs-${status.index}-2">
-                        <c:forEach items="${job.offers}" var="offer">					
+                        <c:forEach items="${job.offers}" var="offer">
+                            <!-- Show offers only from active users -->
+                            <c:if test="${offer.user.status==0}"> 
                             <p align="left" class="jobtext">
                                 <b>Tarjoaja: </b><a href="#" onclick="opendialog2(${offer.user.id})">${offer.user.name}</a>&nbsp;(${offer.user.stars})</br>
                                 <b>Hinta: </b>${offer.price}<br>
@@ -52,6 +54,7 @@
                                     <button class="smallbutton" onclick="location.href='acceptOffer/${offer.id}'">Hyväksy</button>
                             </div>
                             <hr>
+                            </c:if>
                         </c:forEach>
                     </div>
                     <div id="tabs-${status.index}-1" align="left" width="800">

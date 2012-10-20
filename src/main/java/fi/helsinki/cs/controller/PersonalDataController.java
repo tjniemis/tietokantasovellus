@@ -15,6 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * Controller class for Personalized calls. That means calls where application needs to retrieve 
+ * specific user related information
+ * 
+ * @author tesuomin
+ */
 @Controller
 public class PersonalDataController {
         
@@ -30,6 +36,14 @@ public class PersonalDataController {
         @Autowired
 	private ReviewDao reviewDao;
         
+        /**
+         * Retrieves active offers made by User. That means offers where Job's expiry date is has not yet been reached and 
+         * where no offer has been selected as winner yet. 
+         * 
+         * @param model Model of the page
+         * @param principal User data
+         * @return Returns personal.jsp
+         */
         @RequestMapping("/personalData")
         public String personalData(Model model, Principal principal) {
             System.out.println("personalData");       
@@ -46,13 +60,19 @@ public class PersonalDataController {
             return "personal";
 	}
         
+        /**
+         * Returns active Jobs by user. That means Jobs where user is owner and he/she has not yet chosen winning offer. 
+         * 
+         * @param model Model of the page
+         * @param principal User data
+         * @return 
+         */
         @RequestMapping("/personalJobs")
         public String personalJobs(Model model, Principal principal) {
             System.out.println("personalJobs");       
             User user = null;
             user = userDao.findByEmail(principal.getName());                
             List<Job> jobs = jobDao.getActiveJobsByUser(user);
-            //TODO: Lisää arviot
             for (Job job : jobs) {
                 List<Offer> offers = job.getOffers();
                 for (Offer offer : offers) {
@@ -67,6 +87,13 @@ public class PersonalDataController {
             return "personalJobs";
 	}
         
+        /**
+         * Retrieves users job history. That means all jobs where user had the winning offer. 
+         * 
+         * @param model Model of the page
+         * @param principal User data
+         * @return Returns jobHistory.jsp
+         */
         @RequestMapping("/jobHistory")
         public String jobHistory(Model model, Principal principal) {
             System.out.println("jobHistory");       
@@ -79,6 +106,13 @@ public class PersonalDataController {
             return "jobHistory";
 	}
         
+        /**
+         * Retrieves all posted Jobs by user. That means all Jobs where user was Job's owner. 
+         * 
+         * @param model Model of the page
+         * @param principal User data
+         * @return Returns personalHistory.jsp
+         */
         @RequestMapping("/personalHistory")
         public String personalHistory(Model model, Principal principal) {
             System.out.println("personalHistory");       
@@ -95,11 +129,18 @@ public class PersonalDataController {
             return "personalHistory";
 	}
         
+        /**
+         * Retrieves all offers made by user. This includes all offers which have already expired and were not selected
+         * as winning offers. 
+         * 
+         * @param model Model of the page
+         * @param principal User data
+         * @return Returns offerHistory.jsp
+         */
         @RequestMapping("/offerHistory")
         public String offerHistory(Model model, Principal principal) {
             System.out.println("offerHistory");       
-            User user = null;
-            user = userDao.findByEmail(principal.getName());
+            User user = userDao.findByEmail(principal.getName());
             List<Offer> offers = offerDao.getOffersByUser(user);
 
             model.addAttribute("user", user); 

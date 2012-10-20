@@ -27,16 +27,16 @@
                 
 		<tr><td colspan="2" align="center">
 		<div class="smallbuttons">
-			<input type="submit" class="ilmoitabutton" onclick="document.f.submit();" value="Kirjaudu" />
+			<input type="submit" class="ilmoitabutton" onclick="document.f.submit();" value="Kirjaudu" /> </form>
 			<button class="ilmoitabutton" onclick="location.href='register'">Rekisteröidy</button>
 		</div>                        
 		</td></tr>
-                </form>
+               
 		</table>
             
 	</div>
 	<c:if test="${not empty error}">
-		<div class="errorblock">
+		<div class="errorblock" align="center">
 			Your login attempt was not successful, try again.<br /> Caused :
 			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
 		</div>

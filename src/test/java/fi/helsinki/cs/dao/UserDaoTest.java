@@ -3,11 +3,11 @@ package fi.helsinki.cs.dao;
 import java.util.List;
 
 import fi.helsinki.cs.model.User;
-import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,36 @@ public class UserDaoTest {
 
 	@Autowired
 	private UserDao userDao;
+        
+        /*@Autowired
+        private PasswordEncoder passwordEncoder;
 
+        @Test
+        @Rollback(false)
+        public void testConvertPasswords() {
+            List<User> users = userDao.getUsers();
+            for (User user : users) {
+                if (user.getId()==54L) {
+                    String oldPass = user.getPassword();
+                    String newPass = passwordEncoder.encodePassword(oldPass, user.getEmail());
+                    user.setPassword(newPass);
+                    userDao.save(user);
+                }
+            }
+        }*/
+        
+        @Test
+	public void testSaveAndDelete() {
+            User p = new User();
+            p.setName("Al Bundy");
+            p.setEmail("bundy@email.com");
+            p.setPassword("password");
+            userDao.save(p);
+            Long id = p.getId();
+            Assert.assertNotNull(id);
+            Boolean bol = userDao.delete(id);
+	}
+        
 	@Test
 	public void testSaveAndGetUser() {
             User p = new User();

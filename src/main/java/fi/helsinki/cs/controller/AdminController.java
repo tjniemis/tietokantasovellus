@@ -40,7 +40,9 @@ public class AdminController {
                 System.out.println("AdminController");
                 User user = userDao.findByEmail(principal.getName());        
                 List<Job> jobs = jobDao.getJobs();
+                List<User> persons = userDao.getUsers();
                 model.addAttribute("jobs", jobs);
+                model.addAttribute("persons", persons);
                 model.addAttribute("user", user);
 		return "admin";
 	}

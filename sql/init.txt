@@ -8,9 +8,10 @@ drop table question cascade;
 CREATE TABLE person (
 	id		serial PRIMARY KEY,
 	name		varchar(40) NOT NULL,
-	email		varchar(30) NOT NULL,
+	email		varchar(30) NOT NULL constraint UNIQUE,
 	password	varchar(20) NOT NULL,
         role    	varchar(12) NOT NULL,
+	status    	integer NOT NULL,
 	created		date NOT NULL
 );
 CREATE TABLE review (

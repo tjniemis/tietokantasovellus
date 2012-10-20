@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 	<head>
 		<jsp:include page="includes.jsp"/>
@@ -19,7 +20,7 @@
             </div>
         </c:if>
         <br>
-        <h3>Alla listattuna työt joihin voit tehdä tarjouksen. Aktiiviset tarjouksesi löydät Omat tiedot-osiosta.</h3>
+        <h3>Alla listattuna työt joihin voit tehdä tarjouksen. Aktiiviset tarjouksesi löydät Omat tarjoukset-osiosta.</h3>
 	<div id="accordion" class="acc">
             <c:forEach items="${jobs}" var="job" varStatus="status">
                 <c:choose>
@@ -27,8 +28,9 @@
                     <h3><a href="#">${job.title}</a></h3>
                     <div align="left">
                         <ul style="padding-left: 10px;">
+                        <li class="jobtext"><b>Työ luotu:</b><br><fmt:formatDate pattern="dd.MM.yyyy" value="${job.created}" /></li>
 			<li class="jobtext"><b>Työn kuvaus:</b><br>${job.description}</li>
-			<li class="jobtext"><b>Tarjousten deadline:</b><br>${job.expires}</li>		
+			<li class="jobtext"><b>Tarjousten deadline:</b><br><fmt:formatDate pattern="dd.MM.yyyy" value="${job.expires}" /></li>		
                         				
                         <c:if test="${user!=null&&user.id!=job.user.id}">
                             <div id="offer_${job.id}">
@@ -47,7 +49,6 @@
 			<div id="tabs-${status.index}">
                             <ul>
                                     <li><a href="#tabs-${status.index}-1">Kysymykset ja vastaukset</a></li>
-                                    <c:if test="${job.user.id==user.id}"><li><a href="#tabs-${status.index}-2">Tarjoukset</a></li></c:if>
                             </ul>
                             <div id="tabs-${status.index}-1" align="left" width="800">
                             <c:if test="${user.id!=null && job.user.id!=user.id}">
@@ -71,31 +72,12 @@
                                         </c:otherwise>                                        
                                     </c:choose>
                                     </span>
-                                    <div class="smallbuttons" align="left">	
-                                        <c:if test="${job.user.id==user.id}">
-                                            <button class="smallbutton" onclick="opendialog(${question.id}, '${question.question}', '${question.answer}');">Vastaa</button>
-                                            <button class="smallbutton" onclick="confirmation('${question.id}')">Poista</button>
-                                        </c:if>
-                                    </div>
                                 </li>
                                 <hr>
                                 </span>
                             </c:forEach>
                                 </ul>  
                             </div>
-                            <c:if test="${job.user.id==user.id}">
-                            <div id="tabs-${status.index}-2">
-                                <c:forEach items="${job.offers}" var="offer">					
-                                    <p align="left" class="jobtext"><b>Tarjoaja: </b><a href="#">${offer.user.name}</a></br>
-                                    <b>Hinta: </b>${offer.price}<br>
-                                    <b>Teksti: </b>${offer.description}</p>
-                                    <div class="smallbuttons" align="left">	
-                                            <button class="smallbutton" onclick="location.href='acceptOffer/${offer.id}'">Hyväksy</button>
-                                    </div>
-                                    <hr>
-                                </c:forEach>
-                            </div>
-                            </c:if>
 			</div>
                     </div>
                     </c:when>  

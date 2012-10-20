@@ -36,7 +36,7 @@ public class ReviewDaoTest {
     public void testGetReviewsByUser() {
         System.out.println("getReviewsByUser");
         List result = reviewDao.getReviewsByUser(5L);
-        assertTrue(result.size()==0);
+        assertTrue(result.size()>0);
     }
 
    

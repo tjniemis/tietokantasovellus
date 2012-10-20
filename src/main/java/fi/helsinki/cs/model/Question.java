@@ -8,9 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -20,10 +17,6 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class Question extends PersistentObject {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column
     private String question;
@@ -38,21 +31,6 @@ public class Question extends PersistentObject {
     @ManyToOne(cascade=CascadeType.DETACH, fetch= FetchType.LAZY)
     @JoinColumn(name="job_id")
     private Job job;
-    
-    
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     /**
      * @return the question

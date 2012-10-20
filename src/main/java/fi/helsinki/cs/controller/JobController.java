@@ -11,9 +11,7 @@ import fi.helsinki.cs.validator.JobValidator;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -25,11 +23,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * Controller for all calls related to jobs. 
+ * 
+ * @author tesuomin
+ */
 
 @Controller
 public class JobController {
 
+        /**
+         * Binds Date validator class to all methods in this class. That means that each time Job entity is received by method,
+         * it's date fields are validated by its validator class. 
+         */
         @InitBinder
         protected void initBinder(WebDataBinder binder) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -44,8 +51,7 @@ public class JobController {
 	private JobDao jobDao;
         
         @Autowired
-	private OfferDao offerDao;
-        
+	private OfferDao offerDao;        
         
         /**
          * Opens page where user can create new job
@@ -123,8 +129,14 @@ public class JobController {
             }           
         }
         
+        /**
+         * Deletes one job from database. 
+         * 
+         * @param jobId
+         * @return Redirects call to "/personalJobs".
+         */
         @RequestMapping(value = "/deleteJob/{jobId}", method = RequestMethod.GET) 
-        public String deleteJob(@PathVariable Long jobId) {
+        public String deleteJob(@PathVariable Long jobId, Principal principal) {
             System.out.println("deleteJob");
             jobDao.delete(jobId);
             return "redirect:../personalJobs";

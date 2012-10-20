@@ -16,6 +16,7 @@ button.smallbutton { width: 70px; height: 26px;}
 .mainbuttons { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt;margin-top:40px; }
 .header { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 19pt;}
 #accordion { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; width: 850px;text-align:center;margin:0 auto; }
+.admin { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; width: 1100px;text-align:center;margin-top:50px; margin-left: 100px;}
 #dialog { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; }
 #dialog2 { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 9pt; }
 .lomake { font-family: Verdana,Arial,Helvetica,sans-serif;font-size: 10pt;}
@@ -29,8 +30,11 @@ button.smallbutton { width: 70px; height: 26px;}
 	padding: 8px;
 	margin: 16px;
         width: 500px;
+        margin-left: 400px;
 }
-
+.error {
+	color: #ff0000;
+}
 li {list-style: none;margin-top: 6px;}
 ul {margin: 0px;padding:2px;}
 body {background-image:url('../images/ep3eymvfr6ee1.jpg');}

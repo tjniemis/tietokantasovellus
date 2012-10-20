@@ -3,18 +3,17 @@ package fi.helsinki.cs.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Person") //In Postgres 'User' is reserved word.... 
 public class User extends PersistentObject {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+        
+        public static final String ROLE_USER = "ROLE_USER";
+        public static final String ROLE_ADMIN = "ROLE_ADMIN";
+        
+        public static final Integer ACTIVE_USER = new Integer(0);
+        public static final Integer INACTIVE_USER = new Integer(1);
         
         @Column
 	private String name;
@@ -30,7 +29,10 @@ public class User extends PersistentObject {
         private transient Integer average_rating;
         
         @Column
-        private String role = "ROLE_USER";
+        private String role = ROLE_USER;
+        
+        @Column
+        private Integer status = ACTIVE_USER; //0 = active, 1 = inactive
         
 	public User() {}
 
@@ -94,20 +96,6 @@ public class User extends PersistentObject {
 	}
 
     /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
      * @return the password_confirm
      */
     public String getPassword_confirm() {
@@ -147,6 +135,20 @@ public class User extends PersistentObject {
      */
     public void setRole(String role) {
         this.role = role;
+    }
+
+    /**
+     * @return the status
+     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
 }
