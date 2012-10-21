@@ -126,6 +126,15 @@ public class UserController {
                 user.setPassword(passwordSha);
                 //TODO: Check wheter new user email exists
                 User user2 = userDao.findByEmail(user.getEmail());
+                User user3 = userDao.find(user.getId());
+                if (user3.getEmail().equals(user.getEmail())) { 
+                    //User didnt change their email, so proceed with standard update
+                    user3.setPassword(passwordSha); //Update password
+                    user3.setName(user.getName()); //Update name 
+                    userDao.save(user3);
+                    return "redirect:start";
+                }
+                //Otherwise user changed their email address in which case we need to check wheter email address already exists
                 if (user2!=null) { //User exists
                     if (user2.getStatus().equals(User.INACTIVE_USER)) { //User is inactive, then reactivate 
                         user2.setPassword(passwordSha); //Update password
@@ -136,7 +145,7 @@ public class UserController {
                         result.rejectValue("email", "email.same");
                         return "userdata";
                     }
-                } else { //New user
+                } else { //standard save
                     userDao.save(user);
                 }
                 return "redirect:j_spring_security_logout";

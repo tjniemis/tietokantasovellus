@@ -37,6 +37,13 @@ public class UserDaoTest {
         }*/
         
         @Test
+        public void unsuccessfulFind() {
+            User user = userDao.find(9999L);
+            Assert.assertNull(user);
+            System.out.println("user: "+user);
+        }
+        
+        @Test
 	public void testSaveAndDelete() {
             User p = new User();
             p.setName("Al Bundy");
