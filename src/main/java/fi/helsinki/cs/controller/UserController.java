@@ -62,7 +62,7 @@ public class UserController {
                 user.setPassword(passwordSha);
                 //TODO: Check wheter user exists
                 User user2 = userDao.findByEmail(user.getEmail());
-                if (user2.getName()!=null) { //User exists
+                if (user2!=null) { //User exists
                     if (user2.getStatus().equals(User.INACTIVE_USER)) { //User is inactive, then reactivate 
                         user2.setPassword(passwordSha); //Update password
                         user2.setName(user.getName()); //Update name (might have changed)

@@ -21,7 +21,7 @@ public class UserDaoTest {
 	@Autowired
 	private UserDao userDao;
         
-        @Autowired
+        /*@Autowired
         private PasswordEncoder passwordEncoder;
 
         @Test
@@ -34,7 +34,7 @@ public class UserDaoTest {
                     user.setPassword(newPass);
                     userDao.save(user);
             }
-        }
+        }*/
         
         @Test
 	public void testSaveAndDelete() {
