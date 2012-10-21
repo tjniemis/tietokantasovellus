@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ public class UserDaoTest {
 	@Autowired
 	private UserDao userDao;
         
-        /*@Autowired
+        @Autowired
         private PasswordEncoder passwordEncoder;
 
         @Test
@@ -28,14 +29,12 @@ public class UserDaoTest {
         public void testConvertPasswords() {
             List<User> users = userDao.getUsers();
             for (User user : users) {
-                if (user.getId()==54L) {
                     String oldPass = user.getPassword();
                     String newPass = passwordEncoder.encodePassword(oldPass, user.getEmail());
                     user.setPassword(newPass);
                     userDao.save(user);
-                }
             }
-        }*/
+        }
         
         @Test
 	public void testSaveAndDelete() {

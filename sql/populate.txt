@@ -4,15 +4,15 @@ truncate table offer cascade;
 truncate table question cascade;
 truncate table review cascade;
 
-insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'macgyver@email.com', 'Macgyver', 'password', 'ROLE_USER');
-insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'bond@email.com', 'James Bond', 'password', 'ROLE_USER');
-insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'homer@email.com', 'Homer Simpson', 'password', 'ROLE_USER');
-insert into person (created, email, name, password, role) values (CURRENT_TIMESTAMP, 'admin@email.com', 'Administrator', 'password', 'ROLE_ADMIN');
+insert into person (created, email, name, password, role, status) values (CURRENT_TIMESTAMP, 'macgyver@email.com', 'Macgyver', 'password', 'ROLE_USER', 0);
+insert into person (created, email, name, password, role, status) values (CURRENT_TIMESTAMP, 'bond@email.com', 'James Bond', 'password', 'ROLE_USER', 0);
+insert into person (created, email, name, password, role, status) values (CURRENT_TIMESTAMP, 'homer@email.com', 'Homer Simpson', 'password', 'ROLE_USER', 0);
+insert into person (created, email, name, password, role, status) values (CURRENT_TIMESTAMP, 'admin@email.com', 'Administrator', 'password', 'ROLE_ADMIN', 0);
 
-insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 1', TIMESTAMP '2012-10-10', 0, 'Työ 1', 6, null, CURRENT_TIMESTAMP);
-insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 2', TIMESTAMP '2012-11-11', 0, 'Työ 2', 6, null, CURRENT_TIMESTAMP);
-insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 3', TIMESTAMP '2012-01-10', 0, 'Työ 3', 6, null, CURRENT_TIMESTAMP);
-insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Kuvaus 4', TIMESTAMP '2012-09-10', 0, 'Työ 4', 6, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Homerin tyon kuvaus 1', TIMESTAMP '2012-10-10', 0, 'Homerin tyo 1', 7, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Homerin tyon kuvaus 2', TIMESTAMP '2012-11-11', 0, 'Homerin tyo 2', 7, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Homerin tyon kuvaus 3', TIMESTAMP '2012-01-10', 0, 'Homerin tyo 3', 7, null, CURRENT_TIMESTAMP);
+insert into job (description, expires, status, title, owner_id, winning_offer_id, created) values ('Homerin tyon kuvaus 4', TIMESTAMP '2012-09-10', 0, 'Homerin tyo 4', 7, null, CURRENT_TIMESTAMP);
 
 insert into offer (description, price, job_id, user_id, created) values ('Tarjous 1 by Macgyver', 1000, 1, 4, CURRENT_TIMESTAMP);
 insert into offer (description, price, job_id, user_id, created) values ('Tarjous 1 by Bond', 1001, 1, 5, CURRENT_TIMESTAMP);
