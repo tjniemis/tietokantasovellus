@@ -1,4 +1,0 @@
-tietokantasovellus
-==================
-
-Aineopintojen harjoitustyö: Tietokantasovellus
