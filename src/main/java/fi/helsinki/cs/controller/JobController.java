@@ -82,26 +82,29 @@ public class JobController {
         @RequestMapping("/jobs")
         public String listJobs(Model model, Principal principal) {
             System.out.println("jobs");
-            List<Job> jobs = jobDao.getActiveJobs();            
+            List<Job> jobs = jobDao.getActiveJobs();          
+            model.addAttribute("jobs", jobs); 
             User user = null;
             List<Offer> offers = null;
-            user = userDao.findByEmail(principal.getName());        
-            offers = offerDao.getActiveOffersByUser(user);
-            for (Job job : jobs) {
-                Long jobId = job.getId();
-                if (job.getUser().getId().equals(user.getId())) {
-                    job.setShow(false);
-                } else {
-                    for (Offer offer : offers) {
-                        if (offer.getJob().getId().equals(jobId)) {
-                            job.setShow(false);
+            if (principal!=null) {
+                user = userDao.findByEmail(principal.getName());        
+                offers = offerDao.getActiveOffersByUser(user);
+                for (Job job : jobs) {
+                    Long jobId = job.getId();
+                    if (job.getUser().getId().equals(user.getId())) {
+                        job.setShow(false);
+                    } else {
+                        for (Offer offer : offers) {
+                            if (offer.getJob().getId().equals(jobId)) {
+                                job.setShow(false);
+                            }
                         }
                     }
-                }
-            }            
-            model.addAttribute("user", user); 
-            model.addAttribute("jobs", jobs); 
-            model.addAttribute("count", jobDao.getCounts(user));
+                }            
+                model.addAttribute("user", user);
+                model.addAttribute("count", jobDao.getCounts(user));
+            }
+            
             return "jobs";
 	}
         

@@ -28,7 +28,7 @@ public class LoginController {
 	 */
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String home(Model model, Principal principal) {
-                return startPage(model, principal);
+                return "redirect:login";
 	}
         
         /**
